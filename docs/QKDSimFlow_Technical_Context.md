@@ -12,7 +12,7 @@ IMPORTANT: This document is an evidence-based technical snapshot of the QKDSimFl
 ## 1. PROJECT OVERVIEW
 
 ### 1.1 Stated Purpose vs. Verified Capabilities
-* **Stated Purpose (per `PRD.md`):** An interactive, physics-accurate simulation software of the BB84 quantum key distribution protocol for academic research and classroom teaching.
+* **Stated Purpose (per PRD.md):** An interactive, physics-accurate simulation software of the BB84 quantum key distribution protocol for academic research and classroom teaching.
 * **Actual Purpose Supported by Code:** A full-stack web application implementing single-qubit discrete-variable BB84 state preparation, realistic fiber optic attenuation, detector dark counts, eavesdropping strategies (intercept-resend, partial, burst, PNS attack), weak coherent pulse (WCP) statistics, decoy state protocol analysis, drag-and-drop quantum gate transformations, and interactive key extraction.
 
 ### 1.2 Development & Deployment Status
@@ -126,41 +126,61 @@ The end-to-end execution sequence implemented in `backend/routers/simulation.py`
 
 ## 4. PHYSICS AND MATHEMATICAL MODELS
 
-All mathematical formulas in the backend conform to `docs/PHYSICS_CONTRACT.md`:
+All mathematical formulas in the backend conform to `docs/PHYSICS_CONTRACT.md`. All equations below are presented in clean plain-text formula format:
 
-### 4.1 Key Implementation Formulas
+### 4.1 Implementation Formulas
 
 * **Fiber Attenuation:**
-  $$P_{\text{survive}} = 10^{-\frac{\alpha \cdot d}{10}}$$
-  where attenuation coefficient $\alpha = 0.2\text{ dB/km}$, and distance $d \in [0, 150]\text{ km}$.
+  ```
+  P_survive = 10 ^ ( - (0.2 * distance_km) / 10 )
+  ```
+  where attenuation coefficient is `0.2 dB/km`, and distance is between `0` and `150 km`.
 
 * **Detection Probability:**
-  $$P_{\text{click}} = P_{\text{survive}} \cdot \eta$$
-  $$P_{\text{detect}} = P_{\text{click}} + P_{\text{dark}} \cdot (1 - P_{\text{click}})$$
-  where detector efficiency $\eta = 0.85$, and dark count probability $P_{\text{dark}} = 1\times 10^{-5}$.
+  ```
+  P_click  = P_survive * eta
+  P_detect = P_click + P_dark * (1 - P_click)
+  ```
+  where detector efficiency `eta = 0.85` (realistic mode), and dark count probability `P_dark = 1e-5`.
 
 * **Intercept-Resend Eavesdropping QBER:**
-  $$\text{QBER}_{\text{Eve}} = 0.25 \cdot \text{attack\_prob}$$
+  ```
+  QBER_Eve = 0.25 * attack_prob
+  ```
 
 * **Binary Entropy:**
-  $$H(Q) = -Q \log_2(Q) - (1-Q) \log_2(1-Q)$$
-  Edge cases: $H(0) = 0$, $H(1) = 0$, $H(0.5) = 1$.
+  ```
+  H(Q) = -Q * log2(Q) - (1 - Q) * log2(1 - Q)
+  ```
+  Edge cases: `H(0) = 0`, `H(1) = 0`, `H(0.5) = 1`.
 
 * **Secret Key Rate (SKR):**
-  $$R = S \cdot \left(1 - 2 H(Q)\right) \quad \text{for } Q < 0.11$$
-  $$R = 0 \quad \text{for } Q \ge 0.11$$
-  where sifting rate $S = N_{\text{sifted}} / N_{\text{raw}}$.
+  ```
+  R = S * (1 - 2 * H(Q))     [when Q < 0.11]
+  R = 0                      [when Q >= 0.11]
+  ```
+  where sifting rate `S = sifted_bits / raw_bits`.
 
 * **Weak Coherent Pulse (WCP) Poisson Distribution:**
-  $$P(n \mid \mu) = \frac{e^{-\mu} \mu^n}{n!}$$
-  where mean photon number $\mu \in [0.05, 0.5]$ (default $\mu = 0.2$).
+  ```
+  P(n | mu) = (exp(-mu) * mu^n) / n!
+  ```
+  where mean photon number `mu` is between `0.05` and `0.5` (default `mu = 0.2`).
 
 * **Multi-Photon Fraction (PNS Vulnerability):**
-  $$P(n \ge 2 \mid \mu) = 1 - e^{-\mu} - \mu e^{-\mu}$$
+  ```
+  P(n >= 2 | mu) = 1 - exp(-mu) - mu * exp(-mu)
+  ```
 
 * **Decoy State Single-Photon Yield Lower Bound (Lo, Ma, & Chen 2005):**
-  $$Y_1^L = \frac{\mu_s}{\mu_s \mu_d - \mu_d^2} \left[ Q_d e^{\mu_d} - Q_s e^{\mu_s} \frac{\mu_d^2}{\mu_s^2} - \frac{\mu_s^2 - \mu_d^2}{\mu_s^2} Y_0 \right]$$
-  where signal intensity $\mu_s = 0.5$, decoy intensity $\mu_d = 0.1$, vacuum intensity $\mu_v = 0.0$, and $Y_0 = Q_{\text{vacuum}}$. PNS attack is detected when $Y_1^L / Y_1^{\text{expected}} < 0.6$.
+  ```
+  Y1_L = (mu_s / (mu_s * mu_d - mu_d^2)) * (
+      Q_d * exp(mu_d)
+    - Q_s * exp(mu_s) * (mu_d^2 / mu_s^2)
+    - ((mu_s^2 - mu_d^2) / mu_s^2) * Y_0
+  )
+  ```
+  where signal intensity `mu_s = 0.5`, decoy intensity `mu_d = 0.1`, vacuum intensity `mu_v = 0.0`, and `Y_0 = Q_vacuum`. A PNS attack is detected when `Y1_L / Y1_expected < 0.6`.
 
 ---
 
@@ -177,7 +197,7 @@ All mathematical formulas in the backend conform to `docs/PHYSICS_CONTRACT.md`:
 
 ## 6. CHANNEL MODEL
 
-* **Attenuation Coefficient:** `alpha = 0.2 dB/km` (standard telecom fiber at 1550 nm).
+* **Attenuation Coefficient:** `0.2 dB/km` (standard telecom fiber at 1550 nm).
 * **Distance Range:**
   * Backend Pydantic Schema: `0 <= distance_km <= 150`.
   * Frontend UI Slider: 0 km to 150 km.
