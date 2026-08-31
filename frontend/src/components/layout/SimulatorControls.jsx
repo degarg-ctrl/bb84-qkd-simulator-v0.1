@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SimulatorControls.jsx
  * 
  * Simulator-specific control bar.
@@ -100,7 +100,7 @@ export default function SimulatorControls() {
             onClick={() => setSaveModalOpen(true)}
             className="px-3 py-1 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-color)] hover:border-[var(--text-subtle)] rounded transition-colors"
           >
-            💾 SAVE
+            ðŸ’¾ SAVE
           </button>
 
           {/* Load Button */}
@@ -108,7 +108,7 @@ export default function SimulatorControls() {
             onClick={() => setLoadModalOpen(true)}
             className="px-3 py-1 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-color)] hover:border-[var(--text-subtle)] rounded transition-colors"
           >
-            📂 LOAD
+            ðŸ“‚ LOAD
           </button>
 
           {/* Clear Gates Button */}
@@ -117,7 +117,7 @@ export default function SimulatorControls() {
               onClick={clearGates}
               className="px-3 py-1 text-xs font-mono border border-[var(--border-color)] rounded text-[var(--text-muted)] hover:text-red-400 hover:border-red-800 transition-colors"
             >
-              ✕ GATES ({placedGates.length})
+              âœ• GATES ({placedGates.length})
             </button>
           )}
 
@@ -132,7 +132,7 @@ export default function SimulatorControls() {
                 backgroundColor: inspector.isOpen ? '#00aacc15' : 'transparent'
               }}
             >
-              🔍 INSPECT
+              ðŸ” INSPECT
             </button>
           )}
 
@@ -142,7 +142,7 @@ export default function SimulatorControls() {
               onClick={togglePause}
               className="px-3 py-1 text-xs font-mono border rounded transition-colors border-[var(--border-color)] hover:border-[var(--text-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
-              {animation.isPaused ? '▶ RESUME' : '⏸ PAUSE'}
+              {animation.isPaused ? 'â–¶ RESUME' : 'â¸ PAUSE'}
             </button>
           )}
 
@@ -157,7 +157,7 @@ export default function SimulatorControls() {
               border: 'none'
             }}
           >
-            {isLoading ? 'RUNNING...' : '▶ RUN'}
+            {isLoading ? 'RUNNING...' : 'â–¶ RUN'}
           </button>
         </div>
       </div>
@@ -168,3 +168,4 @@ export default function SimulatorControls() {
     </>
   )
 }
+

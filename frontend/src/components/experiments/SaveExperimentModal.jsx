@@ -33,26 +33,37 @@ export default function SaveExperimentModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 w-96">
-        <h2 className="text-xl font-semibold text-cyan-400 mb-4">Save Experiment</h2>
+      <div className="border rounded-lg p-6 w-96 shadow-2xl"
+           style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}>
+        <h2 className="text-xl font-semibold text-cyan-400 mb-4 font-mono">Save Experiment</h2>
         
         <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2">Name</label>
+          <label className="block text-sm mb-2 font-mono" style={{ color: 'var(--text-muted)' }}>Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-white"
+            className="w-full border rounded px-3 py-2 text-sm font-mono outline-none"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--card-border)',
+              color: 'var(--text-primary)'
+            }}
             placeholder="My Experiment"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2">Description (optional)</label>
+          <label className="block text-sm mb-2 font-mono" style={{ color: 'var(--text-muted)' }}>Description (optional)</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-white h-20"
+            className="w-full border rounded px-3 py-2 text-sm font-mono h-20 outline-none resize-none"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--card-border)',
+              color: 'var(--text-primary)'
+            }}
             placeholder="Describe your experiment..."
           />
         </div>
@@ -61,13 +72,18 @@ export default function SaveExperimentModal({ isOpen, onClose }) {
           <button
             onClick={handleSave}
             disabled={!name.trim()}
-            className="flex-1 bg-cyan-600 hover:bg-cyan-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-4 py-2 rounded"
+            className="flex-1 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-mono px-4 py-2 rounded text-sm transition-colors"
           >
             Save
           </button>
           <button
             onClick={onClose}
-            className="flex-1 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded"
+            className="flex-1 border text-sm font-mono px-4 py-2 rounded transition-colors"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--card-border)',
+              color: 'var(--text-muted)'
+            }}
           >
             Cancel
           </button>

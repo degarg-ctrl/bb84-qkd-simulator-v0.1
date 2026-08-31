@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/components/layout/BottomPanel.jsx
  *
  * Bottom panel containing metrics, charts, and bit stream table.
@@ -24,7 +24,7 @@ export default function BottomPanel({ className = '' }) {
     { id: 'bitstream',   label: 'Bit Stream' },
   ]
 
-  // Collapsed state — thin bar with toggle
+  // Collapsed state â€” thin bar with toggle
   if (bottomPanelCollapsed) {
     return (
       <div
@@ -39,12 +39,12 @@ export default function BottomPanel({ className = '' }) {
       >
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono text-[var(--text-muted)]">
-            ▲ Performance & Security
+            â–² Performance & Security
           </span>
           {results && (
             <span className="text-xs font-mono text-[var(--text-subtle)]">
               QBER: {(results.qber * 100).toFixed(2)}% 
-              · SKR: {results.skr.toFixed(3)}
+              Â· SKR: {results.skr.toFixed(3)}
             </span>
           )}
         </div>
@@ -55,7 +55,7 @@ export default function BottomPanel({ className = '' }) {
     )
   }
 
-  // Normal expanded state — no results yet
+  // Normal expanded state â€” no results yet
   if (!results) return (
     <div
       className="flex items-center justify-between 
@@ -71,7 +71,7 @@ export default function BottomPanel({ className = '' }) {
       <span className="text-xs font-mono text-[var(--text-subtle)] 
                        cursor-pointer hover:text-[var(--text-primary)]"
             onClick={toggleBottomPanel}>
-        ▼
+        â–¼
       </span>
     </div>
   )
@@ -112,7 +112,7 @@ export default function BottomPanel({ className = '' }) {
                      px-2 py-2"
           title="Collapse panel"
         >
-          ▼ collapse
+          â–¼ collapse
         </button>
       </div>
 
@@ -171,12 +171,12 @@ export default function BottomPanel({ className = '' }) {
             <div className="mt-2 flex items-start gap-2 
                             text-xs font-mono text-[var(--text-subtle)]
                             overflow-hidden">
-              <span className="text-[var(--text-muted)]">ℹ</span>
+              <span className="text-[var(--text-muted)]">â„¹</span>
               <span>
                 Graph shows theoretical model across distances. 
                 Simulated value shows your actual run result. 
-                Differences are normal at low photon counts — 
-                use n_bits ≥ 5000 for convergence.
+                Differences are normal at low photon counts â€” 
+                use n_bits â‰¥ 5000 for convergence.
               </span>
             </div>
           </div>
@@ -229,17 +229,17 @@ export default function BottomPanel({ className = '' }) {
                     <td className="py-1 pr-4">
                       <span className={photon.match 
                         ? 'text-green-400' : 'text-gray-600'}>
-                        {photon.match ? '✓' : '✗'}
+                        {photon.match ? 'âœ“' : 'âœ—'}
                       </span>
                     </td>
                     <td className="py-1 pr-4">
                       <span className={photon.intercepted 
                         ? 'text-red-400' : 'text-gray-600'}>
-                        {photon.intercepted ? '⚡' : '—'}
+                        {photon.intercepted ? 'âš¡' : 'â€”'}
                       </span>
                     </td>
                     <td className="py-1 text-[var(--text-subtle)]">
-                      {photon.polarization_angle}°
+                      {photon.polarization_angle}Â°
                     </td>
                   </tr>
                 ))}
@@ -251,3 +251,4 @@ export default function BottomPanel({ className = '' }) {
     </motion.div>
   )
 }
+

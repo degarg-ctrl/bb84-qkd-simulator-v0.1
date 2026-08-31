@@ -1,8 +1,7 @@
 /**
  * ExperimentTooltip.jsx
  * 
- * Professional tooltip for experiment items in sidebar.
- * Shows experiment details with clean layout.
+ * Tooltip for experiment items in sidebar with solid colors and theme variable support.
  */
 
 export default function ExperimentTooltip({ experiment }) {
@@ -89,18 +88,20 @@ export default function ExperimentTooltip({ experiment }) {
   if (!info) return null
 
   return (
-    <div className="bg-gray-900/98 backdrop-blur-md border border-cyan-500/30 rounded-lg shadow-2xl w-80 overflow-hidden">
+    <div className="rounded-lg shadow-2xl w-80 overflow-hidden border"
+         style={{ backgroundColor: 'var(--tooltip-bg, var(--panel-bg))', borderColor: 'var(--border-color)' }}>
       {/* Header */}
-      <div className="px-4 py-3 bg-gradient-to-r from-cyan-900/30 to-transparent border-b border-cyan-500/20">
+      <div className="px-4 py-3 border-b"
+           style={{ backgroundColor: 'rgba(0, 180, 220, 0.1)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center gap-3">
           <div 
-            className="w-9 h-9 rounded flex items-center justify-center font-mono font-bold text-white text-xs shadow-lg"
+            className="w-9 h-9 rounded flex items-center justify-center font-mono font-bold text-white text-xs"
             style={{ backgroundColor: experiment.color }}
           >
             {experiment.label}
           </div>
           <div>
-            <h3 className="text-white font-semibold text-base">{info.name}</h3>
+            <h3 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>{info.name}</h3>
             {info.requiresRealistic && (
               <span className="text-xs text-orange-400 font-mono">Realistic Mode Only</span>
             )}
@@ -111,7 +112,7 @@ export default function ExperimentTooltip({ experiment }) {
       {/* Body */}
       <div className="p-4 space-y-4">
         {/* Description */}
-        <p className="text-gray-300 text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
           {info.description}
         </p>
 
@@ -120,7 +121,7 @@ export default function ExperimentTooltip({ experiment }) {
           <div className="text-cyan-400 text-xs font-semibold mb-2 uppercase tracking-wide">
             Objective
           </div>
-          <p className="text-gray-400 text-sm">
+          <p className="text-sm" style={{ color: 'var(--text-subtle)' }}>
             {info.objective}
           </p>
         </div>
@@ -132,7 +133,7 @@ export default function ExperimentTooltip({ experiment }) {
           </div>
           <div className="space-y-1.5">
             {info.steps.map((step, idx) => (
-              <div key={idx} className="text-gray-300 text-sm flex items-start gap-2">
+              <div key={idx} className="text-sm flex items-start gap-2" style={{ color: 'var(--text-muted)' }}>
                 <span className="text-cyan-500 font-mono text-xs mt-0.5">{idx + 1}.</span>
                 <span>{step}</span>
               </div>
@@ -145,7 +146,7 @@ export default function ExperimentTooltip({ experiment }) {
           <div className="text-cyan-400 text-xs font-semibold mb-2 uppercase tracking-wide">
             Expected Result
           </div>
-          <p className="text-gray-400 text-sm">
+          <p className="text-sm" style={{ color: 'var(--text-subtle)' }}>
             {info.expected}
           </p>
         </div>

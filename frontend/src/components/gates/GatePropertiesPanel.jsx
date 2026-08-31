@@ -53,11 +53,13 @@ export default function GatePropertiesPanel() {
       <motion.div 
         initial={{ width: 0 }}
         animate={{ width: 'auto' }}
-        className="bg-gray-900 border-l border-gray-800 flex items-start p-2"
+        className="border-l flex items-start p-2"
+        style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}
       >
         <button
           onClick={() => setIsCollapsed(false)}
-          className="text-gray-500 hover:text-cyan-400 transition-colors"
+          className="hover:text-cyan-400 transition-colors"
+          style={{ color: 'var(--text-muted)' }}
           title="Expand panel"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -72,13 +74,16 @@ export default function GatePropertiesPanel() {
     <motion.div 
       initial={{ width: 0 }}
       animate={{ width: 320 }}
-      className="bg-gray-900 border-l border-gray-800 overflow-y-auto flex flex-col"
+      className="border-l overflow-y-auto flex flex-col"
+      style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}
     >
-      <div className="flex items-center justify-between p-4 border-b border-gray-800 sticky top-0 bg-gray-900 z-10">
-        <h3 className="text-cyan-400 font-semibold">Gate Properties</h3>
+      <div className="flex items-center justify-between p-4 border-b sticky top-0 z-10"
+           style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}>
+        <h3 className="text-cyan-400 font-semibold font-mono text-sm">Gate Properties</h3>
         <button
           onClick={() => setIsCollapsed(true)}
-          className="text-gray-500 hover:text-cyan-400 transition-colors"
+          className="hover:text-cyan-400 transition-colors"
+          style={{ color: 'var(--text-muted)' }}
           title="Collapse panel"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -89,8 +94,8 @@ export default function GatePropertiesPanel() {
 
       {placedGates.length === 0 ? (
         <div className="p-4">
-          <p className="text-gray-500 text-sm">No gates placed</p>
-          <p className="text-gray-600 text-xs mt-2">
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>No gates placed</p>
+          <p className="text-xs mt-2" style={{ color: 'var(--text-subtle)' }}>
             Drag gates from the sidebar onto the quantum channel
           </p>
         </div>
@@ -109,50 +114,57 @@ export default function GatePropertiesPanel() {
                   e.preventDefault();
                   deleteGate(gate.id);
                 }}
-                className={`p-4 border-b border-gray-800 cursor-pointer transition-colors ${
-                  selectedGate?.id === gate.id ? 'bg-cyan-900/20 border-l-4 border-l-cyan-500' : 'hover:bg-gray-800/50'
+                className={`p-4 border-b cursor-pointer transition-colors ${
+                  selectedGate?.id === gate.id ? 'border-l-4 border-l-cyan-500' : ''
                 }`}
+                style={{
+                  backgroundColor: selectedGate?.id === gate.id ? 'rgba(0, 204, 255, 0.1)' : 'transparent',
+                  borderColor: 'var(--border-color)'
+                }}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-cyan-600 rounded flex items-center justify-center font-mono font-bold text-white">
+                    <div className="w-8 h-8 rounded flex items-center justify-center font-mono font-bold text-white"
+                         style={{ backgroundColor: gate.color || '#00aacc' }}>
                       {gate.type}
                     </div>
                     <div>
-                      <div className="text-white font-mono text-sm">{gate.type} Gate</div>
-                      <div className="text-gray-500 text-xs">Lane {gate.lane + 1} • Pos {(gate.position * 100).toFixed(0)}%</div>
+                      <div className="font-mono text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{gate.type} Gate</div>
+                      <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Lane {gate.lane + 1} • Pos {(gate.position * 100).toFixed(0)}%</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mb-3">
-                  <div className="text-gray-400 text-xs mb-1">Effect on Photons:</div>
+                  <div className="text-xs mb-1" style={{ color: 'var(--text-subtle)' }}>Effect on Photons:</div>
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-cyan-300 text-xs bg-gray-800/50 p-2 rounded"
+                    className="text-cyan-400 text-xs p-2 rounded border"
+                    style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
                   >
                     {photonEffects[gate.type]}
                   </motion.div>
                 </div>
 
                 <div className="mb-3">
-                  <div className="text-gray-400 text-xs mb-1">Matrix:</div>
-                  <div className="bg-gray-800 p-2 rounded font-mono text-xs text-center">
+                  <div className="text-xs mb-1" style={{ color: 'var(--text-subtle)' }}>Matrix:</div>
+                  <div className="p-2 rounded font-mono text-xs text-center border"
+                       style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}>
                     <div className="flex justify-center gap-3">
                       <div>
-                        <div className="text-cyan-300">{gateMatrices[gate.type][0][0]}</div>
-                        <div className="text-cyan-300 mt-1">{gateMatrices[gate.type][1][0]}</div>
+                        <div className="text-cyan-400">{gateMatrices[gate.type][0][0]}</div>
+                        <div className="text-cyan-400 mt-1">{gateMatrices[gate.type][1][0]}</div>
                       </div>
                       <div>
-                        <div className="text-cyan-300">{gateMatrices[gate.type][0][1]}</div>
-                        <div className="text-cyan-300 mt-1">{gateMatrices[gate.type][1][1]}</div>
+                        <div className="text-cyan-400">{gateMatrices[gate.type][0][1]}</div>
+                        <div className="text-cyan-400 mt-1">{gateMatrices[gate.type][1][1]}</div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="text-gray-400 text-xs">
+                <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
                   {descriptions[gate.type]}
                 </div>
               </motion.div>

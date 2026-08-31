@@ -34,9 +34,9 @@ export default function SimulatorPage() {
   // Guide Page (About)
   if (activeView === 'guide') {
     return (
-      <div className="h-screen flex flex-col" style={{ backgroundColor: 'var(--canvas-bg)' }}>
+      <div className="h-screen flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--canvas-bg)' }}>
         <UniversalTopBar />
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-hidden">
           <GuidePage />
         </div>
         <ExperimentModal />

@@ -98,8 +98,8 @@ export default function GatesSection() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-white mb-4">Quantum Gates</h2>
-        <p className="text-gray-300 leading-relaxed">
+        <h2 className="text-2xl font-bold font-mono mb-4" style={{ color: 'var(--text-primary)' }}>Quantum Gates</h2>
+        <p className="leading-relaxed text-sm" style={{ color: 'var(--text-secondary)' }}>
           Quantum gates are operations that transform quantum states. In this simulator, you can place gates
           on the quantum channel to observe how they affect photon polarization states.
         </p>
@@ -112,15 +112,18 @@ export default function GatesSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-gray-800/50 border border-gray-700 rounded-lg p-6"
+            className="border rounded-lg p-6"
+            style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}
           >
-            <div className="flex items-start gap-6">
+            <div className="flex flex-col md:flex-row items-start gap-6">
               {/* 3D Visualization */}
-              <div className="flex-shrink-0">
-                <div className="bg-gray-900/50 rounded-lg p-3">
+              <div className="flex-shrink-0 mx-auto md:mx-0">
+                <div className="rounded-lg p-3 border"
+                     style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}>
                   <Suspense fallback={
-                    <div className="w-40 h-40 flex items-center justify-center text-gray-500 text-xs">
-                      Loading...
+                    <div className="w-40 h-40 flex items-center justify-center text-xs"
+                         style={{ color: 'var(--text-muted)' }}>
+                      Loading 3D...
                     </div>
                   }>
                     <BlochSphere gateType={gate.id} animate={true} size={160} />
@@ -139,28 +142,28 @@ export default function GatesSection() {
                     {gate.symbol}
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-white">{gate.name}</h3>
-                    <p className="text-gray-400 text-sm">Quantum Gate Operation</p>
+                    <h3 className="text-xl font-semibold font-mono" style={{ color: 'var(--text-primary)' }}>{gate.name}</h3>
+                    <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Quantum Gate Operation</p>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   {gate.description}
                 </p>
 
                 {/* Effect */}
                 <div>
-                  <div className="text-cyan-400 text-sm font-semibold mb-2">EFFECT</div>
-                  <p className="text-gray-400 text-sm">{gate.effect}</p>
+                  <div className="text-cyan-400 text-xs font-semibold mb-1 font-mono uppercase tracking-wider">EFFECT</div>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{gate.effect}</p>
                 </div>
 
                 {/* Transformations */}
                 <div>
-                  <div className="text-cyan-400 text-sm font-semibold mb-2">STATE TRANSFORMATIONS</div>
+                  <div className="text-cyan-400 text-xs font-semibold mb-1 font-mono uppercase tracking-wider">STATE TRANSFORMATIONS</div>
                   <div className="space-y-1">
                     {gate.transforms.map((transform, idx) => (
-                      <div key={idx} className="text-gray-300 text-sm font-mono flex items-center gap-2">
+                      <div key={idx} className="text-sm font-mono flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
                         <span className="text-cyan-500">→</span>
                         <span>{transform}</span>
                       </div>
@@ -170,8 +173,8 @@ export default function GatesSection() {
 
                 {/* Use Case */}
                 <div>
-                  <div className="text-cyan-400 text-sm font-semibold mb-2">USE IN QKD</div>
-                  <p className="text-gray-400 text-sm">{gate.useCase}</p>
+                  <div className="text-cyan-400 text-xs font-semibold mb-1 font-mono uppercase tracking-wider">USE IN QKD</div>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{gate.useCase}</p>
                 </div>
               </div>
             </div>
@@ -180,27 +183,28 @@ export default function GatesSection() {
       </div>
 
       {/* How to Use */}
-      <div className="bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-cyan-400 mb-3">How to Use Gates</h3>
-        <ol className="space-y-2 text-gray-300">
+      <div className="border rounded-lg p-6"
+           style={{ backgroundColor: 'rgba(0, 204, 255, 0.08)', borderColor: 'rgba(0, 204, 255, 0.25)' }}>
+        <h3 className="text-lg font-semibold text-cyan-400 font-mono mb-3">How to Use Gates</h3>
+        <ol className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
           <li className="flex gap-3">
-            <span className="text-cyan-400 font-bold">1.</span>
+            <span className="text-cyan-400 font-bold font-mono">1.</span>
             <span>Drag a gate from the sidebar onto a quantum channel lane</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400 font-bold">2.</span>
+            <span className="text-cyan-400 font-bold font-mono">2.</span>
             <span>Gates snap to specific positions (15 slots per lane)</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400 font-bold">3.</span>
+            <span className="text-cyan-400 font-bold font-mono">3.</span>
             <span>Run the simulation to see how gates affect photon states</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400 font-bold">4.</span>
+            <span className="text-cyan-400 font-bold font-mono">4.</span>
             <span>Observe changes in QBER and key security metrics</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400 font-bold">5.</span>
+            <span className="text-cyan-400 font-bold font-mono">5.</span>
             <span>Right-click gates in the properties panel to delete them</span>
           </li>
         </ol>

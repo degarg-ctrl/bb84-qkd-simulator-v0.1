@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/components/canvas/QuantumCanvas.jsx
  *
  * Main quantum channel visualization canvas.
@@ -6,13 +6,13 @@
  *
  * Layout (canvas coordinates, 1200x400px):
  *
- * ALICE(120,200) ────────────────── EVE(600,200) ────────────────── BOB(1080,200)
- *     │                                  │                               │
- *  Lane 1 ════════════════════════════════════════════════════════════════
- *  Lane 2 ════════════════════════════════════════════════════════════════
- *  Lane 3 ════════════════════════════════════════════════════════════════
+ * ALICE(120,200) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ EVE(600,200) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ BOB(1080,200)
+ *     â”‚                                  â”‚                               â”‚
+ *  Lane 1 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+ *  Lane 2 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+ *  Lane 3 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
  *
- * Canvas is responsive — scales to container width maintaining aspect ratio.
+ * Canvas is responsive â€” scales to container width maintaining aspect ratio.
  */
 
 import { useEffect, useRef, useCallback, useState } from 'react'
@@ -20,7 +20,7 @@ import useSimulationStore from '../../store/simulationStore'
 import { usePhotonAnimation } from '../../hooks/usePhotonAnimation'
 import GateStateVector from '../gates/GateStateVector'
 import GateContextMenu from '../gates/GateContextMenu'
-// ─── DESIGN CONSTANTS ────────────────────────────────────────────
+// â”€â”€â”€ DESIGN CONSTANTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const CANVAS_WIDTH = 1200
 const CANVAS_HEIGHT = 400
 const ALICE_X = 120
@@ -80,53 +80,113 @@ export default function QuantumCanvas({ className = '' }) {
   /**
    * Draw a single entity node (Alice, Bob, or Eve).
    */
-  const drawEntityNode = useCallback((ctx, x, y, label, color, sublabel = '') => {
+  const drawEntityNode = useCallback((ctx, x, y, label, color, sublabel = '', type = 'default') => {
     ctx.save()
 
-    // White outer ring
-    ctx.beginPath()
-    ctx.arc(x, y, NODE_RADIUS + 4, 0, Math.PI * 2)
-    ctx.strokeStyle = 'rgba(255,255,255,0.3)'
-    ctx.lineWidth = 1.5
-    ctx.stroke()
-      
-      ctx.shadowBlur = 0
+    const r = NODE_RADIUS
 
-    // Colored glow ring
-    ctx.beginPath()
-    ctx.arc(x, y, NODE_RADIUS + 2, 0, Math.PI * 2)
-    ctx.strokeStyle = color + '60'
-    ctx.lineWidth = 3
-    ctx.shadowColor = color
-    ctx.shadowBlur = 12
-    ctx.stroke()
-      
-      ctx.shadowBlur = 0
-    ctx.shadowBlur = 0
+    if (type === 'alice') {
+      // Laser source â€” rectangle housing + emission triangle
+      const w = r * 2.2, h = r * 1.4
+      ctx.fillStyle = color + '25'
+      ctx.strokeStyle = color
+      ctx.lineWidth = 2
+      ctx.beginPath()
+      ctx.roundRect(x - w/2, y - h/2, w, h, 4)
+      ctx.fill()
+      ctx.stroke()
+      // Emission triangle on right side
+      ctx.fillStyle = color + '50'
+      ctx.beginPath()
+      ctx.moveTo(x + w/2, y - 6)
+      ctx.lineTo(x + w/2 + 10, y)
+      ctx.lineTo(x + w/2, y + 6)
+      ctx.closePath()
+      ctx.fill()
+      // Laser text
+      ctx.fillStyle = color
+      ctx.font = 'bold 10px monospace'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText('SRC', x, y)
+    } else if (type === 'bob') {
+      // Detector â€” funnel/trapezoid shape
+      const w = r * 2.2, h = r * 1.4
+      ctx.fillStyle = color + '25'
+      ctx.strokeStyle = color
+      ctx.lineWidth = 2
+      ctx.beginPath()
+      // Funnel â€” wider on left (receiving), narrow on right (sensing)
+      ctx.moveTo(x - w/2, y - h/2)
+      ctx.lineTo(x + w/2, y - h/4)
+      ctx.lineTo(x + w/2, y + h/4)
+      ctx.lineTo(x - w/2, y + h/2)
+      ctx.closePath()
+      ctx.fill()
+      ctx.stroke()
+      // Detector text
+      ctx.fillStyle = color
+      ctx.font = 'bold 10px monospace'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText('DET', x, y)
+    } else if (type === 'eve') {
+      // Spy tap â€” diamond/rhombus shape
+      const s = r * 1.1
+      ctx.fillStyle = color + '20'
+      ctx.strokeStyle = color
+      ctx.lineWidth = 2
+      ctx.beginPath()
+      ctx.moveTo(x, y - s)     // top
+      ctx.lineTo(x + s, y)     // right
+      ctx.lineTo(x, y + s)     // bottom
+      ctx.lineTo(x - s, y)     // left
+      ctx.closePath()
+      ctx.fill()
+      ctx.stroke()
+      // Tap icon â€” crosshair lines
+      ctx.strokeStyle = color + '60'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(x - s * 0.4, y)
+      ctx.lineTo(x + s * 0.4, y)
+      ctx.moveTo(x, y - s * 0.4)
+      ctx.lineTo(x, y + s * 0.4)
+      ctx.stroke()
+    } else {
+      // Fallback: solid bordered circle
+      ctx.beginPath()
+      ctx.arc(x, y, r, 0, Math.PI * 2)
+      ctx.fillStyle = color + '25'
+      ctx.fill()
+      ctx.strokeStyle = color
+      ctx.lineWidth = 2
+      ctx.stroke()
+    }
 
-    // Filled circle
-    ctx.beginPath()
-    ctx.arc(x, y, NODE_RADIUS, 0, Math.PI * 2)
-    ctx.fillStyle = color + '30'
-    ctx.fill()
-    ctx.strokeStyle = color
-    ctx.lineWidth = 2
-    ctx.stroke()
-      
-      ctx.shadowBlur = 0
+    // Outer border ring
+    const outerR = type === 'eve' ? r * 1.1 + 4 : r + 4
+    if (type !== 'eve') {
+      ctx.beginPath()
+      ctx.arc(x, y, outerR, 0, Math.PI * 2)
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)'
+      ctx.lineWidth = 1
+      ctx.stroke()
+    }
 
     // Label
-    ctx.fillStyle = '#ffffff'
+    const labelY = (type === 'eve') ? y + r * 1.1 + 8 : y + r + 8
+    ctx.fillStyle = 'var(--text-primary, #ffffff)'
     ctx.font = 'bold 11px monospace'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'top'
-    ctx.fillText(label, x, y + NODE_RADIUS + 8)
+    ctx.fillText(label, x, labelY)
 
     // Sublabel
     if (sublabel) {
       ctx.fillStyle = '#aaaaaa'
       ctx.font = '9px monospace'
-      ctx.fillText(sublabel, x, y + NODE_RADIUS + 20)
+      ctx.fillText(sublabel, x, labelY + 12)
     }
 
     ctx.restore()
@@ -141,15 +201,11 @@ export default function QuantumCanvas({ className = '' }) {
     const eveActive = params.attack_prob > 0
 
     LANE_Y_POSITIONS.forEach((y, laneIndex) => {
-      // Glow effect
-      ctx.shadowBlur = 3
-      ctx.shadowColor = 'rgba(255,255,255,0.2)'
       ctx.strokeStyle = 'rgba(255,255,255,0.5)'
       ctx.lineWidth = 2
-      ctx.setLineDash([10, 15]) // Dashed line
+      ctx.setLineDash([10, 15])
 
       if (eveActive) {
-        // Draw lane in two segments: Alice to Eve, Eve to Bob
         ctx.beginPath()
         ctx.moveTo(ALICE_X + NODE_RADIUS, y)
         ctx.lineTo(EVE_X - NODE_RADIUS, y)
@@ -160,25 +216,20 @@ export default function QuantumCanvas({ className = '' }) {
         ctx.lineTo(BOB_X - NODE_RADIUS, y)
         ctx.stroke()
       } else {
-        // Draw continuous lane (Eve can be overshadowed)
         ctx.beginPath()
         ctx.moveTo(ALICE_X + NODE_RADIUS, y)
         ctx.lineTo(BOB_X - NODE_RADIUS, y)
         ctx.stroke()
       }
-      
-      ctx.shadowBlur = 0
 
       // Lane label on far left
       ctx.setLineDash([])
-      ctx.shadowBlur = 0
       ctx.fillStyle = 'rgba(255,255,255,0.3)'
       ctx.font = '9px JetBrains Mono, monospace'
       ctx.textAlign = 'left'
       ctx.fillText(`LANE 0${laneIndex + 1}`, 20, y + 4)
 
       // Check if any cloning probe is on this lane
-      // If so, draw the lane segment AFTER the probe in red
       const cloningProbes = placedGates.filter(
         g => (g.type === 'clone' || g.type === 'cnot') && 
              g.lane === laneIndex
@@ -193,16 +244,11 @@ export default function QuantumCanvas({ className = '' }) {
         ctx.beginPath()
         ctx.setLineDash([4, 4])
         ctx.strokeStyle = '#ef444460'
-        ctx.shadowColor = '#ef4444'
-        ctx.shadowBlur = 4
         ctx.lineWidth = 1.5
         ctx.moveTo(probeX, y)
         ctx.lineTo(BOB_X - NODE_RADIUS, y)
         ctx.stroke()
-      
-      ctx.shadowBlur = 0
         ctx.setLineDash([])
-        ctx.shadowBlur = 0
       }
     })
 
@@ -222,7 +268,7 @@ export default function QuantumCanvas({ className = '' }) {
       const laneY = LANE_Y_POSITIONS[gate.lane]
 
       if (gate.type === 'clone' || gate.type === 'cnot') {
-        // Cloning probe — render as red danger symbol
+        // Cloning probe â€” render as red danger symbol
         const size = 26
         
         // Red pulsing background
@@ -242,7 +288,7 @@ export default function QuantumCanvas({ className = '' }) {
         ctx.font = 'bold 11px monospace'
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
-        ctx.fillText(gate.type === 'clone' ? '⊗' : '⊕', 
+        ctx.fillText(gate.type === 'clone' ? 'âŠ—' : 'âŠ•', 
                      gateX, laneY)
         
         // Warning label below
@@ -255,11 +301,7 @@ export default function QuantumCanvas({ className = '' }) {
 
       const gateColor = gate.color || '#6366f1'
 
-      // Gate background square
-      // Shadow/glow effect
-      ctx.shadowColor = gateColor
-      ctx.shadowBlur = 8
-      
+      // Gate background square â€” solid fill, no shadow
       const size = 32
       ctx.fillStyle = gateColor + '40'
       ctx.strokeStyle = gateColor
@@ -268,8 +310,6 @@ export default function QuantumCanvas({ className = '' }) {
       ctx.roundRect(gateX - size/2, laneY - size/2, size, size, 6)
       ctx.fill()
       ctx.stroke()
-      
-      ctx.shadowBlur = 0
 
       // Gate label
       ctx.fillStyle = '#ffffff'
@@ -286,8 +326,6 @@ export default function QuantumCanvas({ className = '' }) {
       ctx.moveTo(gateX, laneY - 30)
       ctx.lineTo(gateX, laneY + 30)
       ctx.stroke()
-      
-      ctx.shadowBlur = 0
       ctx.setLineDash([])
     })
   }, [placedGates, params.attack_prob])
@@ -295,13 +333,14 @@ export default function QuantumCanvas({ className = '' }) {
   /**
    * Draw the static background.
    */
-  const drawBackground = useCallback((ctx, width, height) => {
-    // Solid charcoal-blue base
-    ctx.fillStyle = '#1a1a2e'
+  const drawBackground = useCallback((ctx, width, height, canvasBg) => {
+    // Use CSS variable background (light or dark)
+    ctx.fillStyle = canvasBg || '#1a1a2e'
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    // Subtle grid with white lines
-    ctx.strokeStyle = 'rgba(255,255,255,0.04)'
+    // Subtle grid
+    const isLight = canvasBg && canvasBg !== '#1a1a2e'
+    ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)'
     ctx.lineWidth = 0.5
     const gridSize = 40
     for (let x = 0; x <= CANVAS_WIDTH; x += gridSize) {
@@ -309,16 +348,12 @@ export default function QuantumCanvas({ className = '' }) {
       ctx.moveTo(x, 0)
       ctx.lineTo(x, CANVAS_HEIGHT)
       ctx.stroke()
-      
-      ctx.shadowBlur = 0
     }
     for (let y = 0; y <= CANVAS_HEIGHT; y += gridSize) {
       ctx.beginPath()
       ctx.moveTo(0, y)
       ctx.lineTo(CANVAS_WIDTH, y)
       ctx.stroke()
-      
-      ctx.shadowBlur = 0
     }
   }, [])
 
@@ -344,12 +379,15 @@ export default function QuantumCanvas({ className = '' }) {
     const scaleFactorY = (zoomedHeight / CANVAS_HEIGHT) * dpr
     ctx.scale(scaleFactorX, scaleFactorY)
 
-    drawBackground(ctx, CANVAS_WIDTH, CANVAS_HEIGHT)
+    // Read canvas background from CSS variable for light-mode support
+    const computedStyle = getComputedStyle(document.documentElement)
+    const canvasBg = computedStyle.getPropertyValue('--canvas-bg').trim() || '#1a1a2e'
+    drawBackground(ctx, CANVAS_WIDTH, CANVAS_HEIGHT, canvasBg)
     drawChannelLanes(ctx)
     drawGates(ctx)
 
-    drawEntityNode(ctx, ALICE_X, ENTITY_Y, 'ALICE', COLORS.aliceNode, 'Sender')
-    drawEntityNode(ctx, BOB_X, ENTITY_Y, 'BOB', COLORS.bobNode, 'Receiver')
+    drawEntityNode(ctx, ALICE_X, ENTITY_Y, 'ALICE', COLORS.aliceNode, 'Sender', 'alice')
+    drawEntityNode(ctx, BOB_X, ENTITY_Y, 'BOB', COLORS.bobNode, 'Receiver', 'bob')
 
     const eveColor = params.attack_prob > 0 
       ? COLORS.eveNode 
@@ -357,7 +395,7 @@ export default function QuantumCanvas({ className = '' }) {
     const eveSublabel = params.attack_prob > 0 
       ? `${(params.attack_prob * 100).toFixed(0)}% intercept`
       : 'Inactive'
-    drawEntityNode(ctx, EVE_X, ENTITY_Y, 'EVE', eveColor, eveSublabel)
+    drawEntityNode(ctx, EVE_X, ENTITY_Y, 'EVE', eveColor, eveSublabel, 'eve')
 
     ctx.restore()
   }, [drawBackground, drawChannelLanes, drawEntityNode, drawGates, params.attack_prob, zoomedWidth, zoomedHeight])
@@ -530,8 +568,8 @@ export default function QuantumCanvas({ className = '' }) {
       ref={wrapperRef}
       className={`relative w-full h-full rounded-lg overflow-hidden border shadow-2xl ${className}`}
       style={{ 
-        background: '#1a1a2e',
-        borderColor: 'rgba(255,255,255,0.08)' 
+        background: 'var(--canvas-bg)',
+        borderColor: 'var(--border-color)' 
       }}
     >
       {/* Scrollable Area */}
@@ -639,20 +677,23 @@ export default function QuantumCanvas({ className = '' }) {
       </div>
 
       <div className="absolute top-4 right-4 flex items-center gap-2 pointer-events-auto">
-        <div className="flex bg-gray-900/80 border border-gray-700 rounded-lg overflow-hidden backdrop-blur-sm shadow-xl">
+        <div className="flex rounded-lg overflow-hidden border"
+             style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}>
           <button 
             onClick={() => setToolMode('cursor')}
-            className={`px-3 py-1.5 text-sm transition-colors ${toolMode === 'cursor' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-400 hover:bg-gray-800'}`}
+            className={`px-3 py-1.5 text-sm transition-colors ${toolMode === 'cursor' ? 'bg-cyan-500/20 text-cyan-400' : ''}`}
+            style={{ color: toolMode !== 'cursor' ? 'var(--text-muted)' : undefined }}
             title="Select Mode"
           >
-            👆
+            ðŸ‘†
           </button>
           <button 
             onClick={() => setToolMode('hand')}
-            className={`px-3 py-1.5 text-sm transition-colors ${toolMode === 'hand' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-400 hover:bg-gray-800'}`}
+            className={`px-3 py-1.5 text-sm transition-colors ${toolMode === 'hand' ? 'bg-cyan-500/20 text-cyan-400' : ''}`}
+            style={{ color: toolMode !== 'hand' ? 'var(--text-muted)' : undefined }}
             title="Pan Mode"
           >
-            ✋
+            âœ‹
           </button>
         </div>
         <button 
@@ -663,7 +704,12 @@ export default function QuantumCanvas({ className = '' }) {
               scrollContainerRef.current.scrollTop = 0
             }
           }}
-          className="px-3 py-1.5 bg-gray-900/80 border border-gray-700 rounded-lg text-xs text-gray-300 hover:text-white hover:bg-gray-800 backdrop-blur-sm shadow-xl transition-colors font-mono"
+          className="px-3 py-1.5 rounded-lg text-xs font-mono border transition-colors"
+          style={{
+            backgroundColor: 'var(--panel-bg)',
+            borderColor: 'var(--border-color)',
+            color: 'var(--text-muted)'
+          }}
           title="Reset View"
         >
           RESET
@@ -674,7 +720,7 @@ export default function QuantumCanvas({ className = '' }) {
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-red-950/40 
                         border border-red-500/50 rounded text-red-400 
                         text-[10px] font-mono tracking-wider animate-pulse pointer-events-none">
-          ⚠ SECURITY THRESHOLD BREACHED
+          âš  SECURITY THRESHOLD BREACHED
         </div>
       )}
     </div>
@@ -692,3 +738,4 @@ export {
   COLORS, 
   NODE_RADIUS 
 }
+

@@ -28,16 +28,20 @@ export default function GateStateVector({ gate, position, isHovered }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="absolute bg-gray-900/95 border border-cyan-500 rounded px-3 py-2 text-xs z-50 pointer-events-none"
-          style={{ left: position.x + 40, top: position.y - 80 }}
+          className="absolute border border-cyan-500 rounded px-3 py-2 text-xs z-50 pointer-events-none shadow-lg"
+          style={{
+            left: position.x + 40,
+            top: position.y - 80,
+            backgroundColor: 'var(--tooltip-bg, var(--panel-bg))'
+          }}
         >
-          <div className="font-mono text-cyan-400 whitespace-nowrap">
+          <div className="font-mono text-cyan-400 whitespace-nowrap font-semibold">
             |ψ⟩ = {formatComplex(stateVector.alpha)}|0⟩ + {formatComplex(stateVector.beta)}|1⟩
           </div>
-          <div className="text-gray-400 mt-1">
+          <div className="mt-1 font-mono" style={{ color: 'var(--text-muted)' }}>
             P(0) = {prob0}
           </div>
-          <div className="text-gray-400">
+          <div className="font-mono" style={{ color: 'var(--text-muted)' }}>
             P(1) = {prob1}
           </div>
         </motion.div>

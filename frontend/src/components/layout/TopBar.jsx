@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/components/layout/TopBar.jsx
  *
  * Top navigation bar for QKD Simulator.
@@ -35,7 +35,7 @@ export default function TopBar() {
            }}>
         {/* Left: Logo and badge */}
         <div className="flex items-center gap-3">
-          {/* Quantum icon — simple SVG atom */}
+          {/* Quantum icon â€” simple SVG atom */}
           <svg width="20" height="20" viewBox="0 0 24 24" 
                fill="none" stroke="#6366f1" strokeWidth="1.5">
             <circle cx="12" cy="12" r="3"/>
@@ -140,7 +140,7 @@ export default function TopBar() {
             }}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
-            {theme === 'dark' ? '☀' : '🌙'}
+            {theme === 'dark' ? 'â˜€' : 'ðŸŒ™'}
           </button>
           <button
             onClick={() => setActiveView('guide')}
@@ -165,7 +165,7 @@ export default function TopBar() {
                        hover:text-[var(--text-primary)] border border-[var(--border-color)] 
                        hover:border-[var(--text-subtle)] rounded transition-colors"
           >
-            💾 SAVE
+            ðŸ’¾ SAVE
           </button>
           <button
             onClick={() => setLoadModalOpen(true)}
@@ -173,7 +173,7 @@ export default function TopBar() {
                        hover:text-[var(--text-primary)] border border-[var(--border-color)] 
                        hover:border-[var(--text-subtle)] rounded transition-colors"
           >
-            📂 LOAD
+            ðŸ“‚ LOAD
           </button>
           {placedGates.length > 0 && (
             <button
@@ -183,7 +183,7 @@ export default function TopBar() {
                          text-[var(--text-muted)] hover:text-red-400
                          hover:border-red-800 transition-colors"
             >
-              ✕ GATES ({placedGates.length})
+              âœ• GATES ({placedGates.length})
             </button>
           )}
           {results && results.bit_stream?.length > 0 && (
@@ -199,7 +199,7 @@ export default function TopBar() {
                   ? '#00aacc15' : 'transparent'
               }}
             >
-              🔍 INSPECT
+              ðŸ” INSPECT
             </button>
           )}
           {results && (
@@ -210,7 +210,7 @@ export default function TopBar() {
                          border-[var(--border-color)] hover:border-[var(--text-subtle)]
                          text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
-              {animation.isPaused ? '▶ RESUME' : '⏸ PAUSE'}
+              {animation.isPaused ? 'â–¶ RESUME' : 'â¸ PAUSE'}
             </button>
           )}
           <button
@@ -222,7 +222,7 @@ export default function TopBar() {
                        font-mono text-xs tracking-wider 
                        transition-colors"
           >
-            <span>{isLoading ? '●' : '▶'}</span>
+            <span>{isLoading ? 'â—' : 'â–¶'}</span>
             <span>{isLoading ? 'RUNNING' : 'RUN'}</span>
           </button>
         </div>
@@ -232,3 +232,4 @@ export default function TopBar() {
     </>
   )
 }
+

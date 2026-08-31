@@ -189,17 +189,10 @@ export class PhotonParticle {
     const color = this.record.lost
       ? '#666666'
       : this.baseColor
-    const gradient = ctx.createRadialGradient(
-      this.x, this.y, 0,
-      this.x, this.y, this.glowRadius
-    )
-    gradient.addColorStop(0, color + '80')
-    gradient.addColorStop(0.5, color + '30')
-    gradient.addColorStop(1, color + '00')
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.glowRadius,
             0, Math.PI * 2)
-    ctx.fillStyle = gradient
+    ctx.fillStyle = color + '20'
     ctx.fill()
   }
 

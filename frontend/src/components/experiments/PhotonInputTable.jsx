@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Photon input table for Exp 2 and Exp 4.
  * User configures up to 20 photons manually.
  * Each row: bit toggle (0/1) + basis toggle (+/x) + 
@@ -9,10 +9,10 @@ import { useState, useCallback } from 'react'
 
 // State label lookup per BB84 rules
 const STATE_LABELS = {
-  '+_0': { label: '|0⟩', angle: '0°' },
-  '+_1': { label: '|1⟩', angle: '90°' },
-  'x_0': { label: '|+⟩', angle: '45°' },
-  'x_1': { label: '|-⟩', angle: '135°' },
+  '+_0': { label: '|0âŸ©', angle: '0Â°' },
+  '+_1': { label: '|1âŸ©', angle: '90Â°' },
+  'x_0': { label: '|+âŸ©', angle: '45Â°' },
+  'x_1': { label: '|-âŸ©', angle: '135Â°' },
 }
 
 const BASIS_COLORS = {
@@ -78,20 +78,19 @@ export default function PhotonInputTable({
   return (
     <div className="flex flex-col gap-3">
       {/* Table */}
-      <div className="overflow-auto max-h-64 rounded-lg 
-                      border border-gray-800">
+      <div className="overflow-auto max-h-64 rounded-lg border"
+           style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}>
         <table className="w-full text-xs font-mono">
-          <thead className="sticky top-0 bg-gray-950">
-            <tr className="border-b border-gray-800">
-              <th className="text-left px-3 py-2 text-gray-500 
-                             w-8">#</th>
-              <th className="text-left px-3 py-2 text-gray-500">
+          <thead className="sticky top-0" style={{ backgroundColor: 'var(--panel-dark)' }}>
+            <tr className="border-b" style={{ borderColor: 'var(--border-color)' }}>
+              <th className="text-left px-3 py-2 w-8" style={{ color: 'var(--text-subtle)' }}>#</th>
+              <th className="text-left px-3 py-2" style={{ color: 'var(--text-subtle)' }}>
                 Bit
               </th>
-              <th className="text-left px-3 py-2 text-gray-500">
+              <th className="text-left px-3 py-2" style={{ color: 'var(--text-subtle)' }}>
                 Basis
               </th>
-              <th className="text-left px-3 py-2 text-gray-500">
+              <th className="text-left px-3 py-2" style={{ color: 'var(--text-subtle)' }}>
                 State
               </th>
               <th className="w-6"></th>
@@ -103,9 +102,9 @@ export default function PhotonInputTable({
               const stateInfo = STATE_LABELS[stateKey]
               return (
                 <tr key={i} 
-                    className="border-b border-gray-900/50 
-                               hover:bg-gray-900/30">
-                  <td className="px-3 py-1.5 text-gray-600">
+                    className="border-b transition-colors hover:bg-white/5"
+                    style={{ borderColor: 'var(--border-color)' }}>
+                  <td className="px-3 py-1.5" style={{ color: 'var(--text-subtle)' }}>
                     {i + 1}
                   </td>
                   {/* Bit toggle */}
@@ -120,8 +119,12 @@ export default function PhotonInputTable({
                                      transition-colors
                                      ${photon.bit === val
                                        ? 'bg-quantum-blue border-quantum-blue text-white'
-                                       : 'border-gray-700 text-gray-500 hover:text-gray-300'
+                                       : 'hover:text-[var(--text-primary)]'
                                      }`}
+                          style={{
+                            borderColor: photon.bit === val ? undefined : 'var(--border-color)',
+                            color: photon.bit === val ? undefined : 'var(--text-muted)'
+                          }}
                         >
                           {val}
                         </button>
@@ -140,13 +143,16 @@ export default function PhotonInputTable({
                                      transition-colors
                                      ${photon.basis === val
                                        ? 'border-transparent text-white'
-                                       : 'border-gray-700 text-gray-500 hover:text-gray-300'
+                                       : 'hover:text-[var(--text-primary)]'
                                      }`}
                           style={photon.basis === val ? {
                             backgroundColor: BASIS_COLORS[val] + '30',
                             borderColor: BASIS_COLORS[val],
                             color: BASIS_COLORS[val]
-                          } : {}}
+                          } : {
+                            borderColor: 'var(--border-color)',
+                            color: 'var(--text-muted)'
+                          }}
                         >
                           {val}
                         </button>
@@ -160,7 +166,7 @@ export default function PhotonInputTable({
                     }}>
                       {stateInfo?.label}
                     </span>
-                    <span className="text-gray-600 ml-1">
+                    <span className="ml-1" style={{ color: 'var(--text-subtle)' }}>
                       at {stateInfo?.angle}
                     </span>
                   </td>
@@ -169,10 +175,10 @@ export default function PhotonInputTable({
                     <button
                       onClick={() => removePhoton(i)}
                       disabled={photons.length <= 1}
-                      className="text-gray-700 hover:text-red-400
-                                 disabled:opacity-30 transition-colors"
+                      className="hover:text-red-400 disabled:opacity-30 transition-colors"
+                      style={{ color: 'var(--text-subtle)' }}
                     >
-                      ✕
+                      âœ•
                     </button>
                   </td>
                 </tr>
@@ -188,32 +194,36 @@ export default function PhotonInputTable({
           onClick={addPhoton}
           disabled={photons.length >= maxPhotons}
           className="flex items-center gap-1 px-3 py-1.5 
-                     text-xs font-mono border border-gray-700
-                     text-gray-400 hover:text-white 
-                     hover:border-gray-500 rounded
+                     text-xs font-mono border rounded
                      disabled:opacity-30 transition-colors"
+          style={{
+            borderColor: 'var(--border-color)',
+            color: 'var(--text-muted)'
+          }}
         >
           + Add Photon
-          <span className="text-gray-600">
+          <span style={{ color: 'var(--text-subtle)' }}>
             ({photons.length}/{maxPhotons})
           </span>
         </button>
         <div className="flex gap-2">
           <button
             onClick={randomizeAll}
-            className="px-3 py-1.5 text-xs font-mono 
-                       border border-gray-700 text-gray-400
-                       hover:text-white hover:border-gray-500 
-                       rounded transition-colors"
+            className="px-3 py-1.5 text-xs font-mono border rounded transition-colors"
+            style={{
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-muted)'
+            }}
           >
             Randomize
           </button>
           <button
             onClick={clearAll}
-            className="px-3 py-1.5 text-xs font-mono
-                       border border-gray-700 text-gray-400
-                       hover:text-red-400 hover:border-red-800
-                       rounded transition-colors"
+            className="px-3 py-1.5 text-xs font-mono border rounded transition-colors hover:text-red-400"
+            style={{
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-muted)'
+            }}
           >
             Clear
           </button>
@@ -222,3 +232,4 @@ export default function PhotonInputTable({
     </div>
   )
 }
+

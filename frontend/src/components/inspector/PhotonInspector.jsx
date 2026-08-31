@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/components/inspector/PhotonInspector.jsx
  *
  * Floating draggable panel showing step-by-step
@@ -147,9 +147,9 @@ export default function PhotonInspector() {
   const inSiftedKey = isMatch && !isLost
 
   const stateLabel = {
-    '+_0': '|0⟩', '+_1': '|1⟩',
-    'x_0': '|+⟩', 'x_1': '|-⟩'
-  }[`${current.alice_basis}_${current.alice_bit}`] || '|?⟩'
+    '+_0': '|0âŸ©', '+_1': '|1âŸ©',
+    'x_0': '|+âŸ©', 'x_1': '|-âŸ©'
+  }[`${current.alice_basis}_${current.alice_bit}`] || '|?âŸ©'
 
   return (
     <motion.div
@@ -194,7 +194,7 @@ export default function PhotonInspector() {
             className="text-[var(--text-muted)] hover:text-[var(--text-primary)] 
                        transition-colors text-sm"
           >
-            ✕
+            âœ•
           </button>
         </div>
 
@@ -224,7 +224,7 @@ export default function PhotonInspector() {
         <div className="p-3 flex flex-col gap-2">
 
           {/* Alice stage */}
-          <StageCard title="Alice — Encoding" 
+          <StageCard title="Alice â€” Encoding" 
                      color="#00aacc">
             <DataRow label="Secret bit" 
                      value={current.alice_bit} 
@@ -232,11 +232,11 @@ export default function PhotonInspector() {
             <DataRow label="Basis chosen"
                      value={current.alice_basis === '+'
                        ? '+ Rectilinear'
-                       : '× Diagonal'} />
+                       : 'Ã— Diagonal'} />
             <DataRow label="Quantum state"
                      value={stateLabel} highlight />
             <DataRow label="Polarization"
-                     value={`${current.polarization_angle}°`} />
+                     value={`${current.polarization_angle}Â°`} />
           </StageCard>
 
           {/* Channel stage */}
@@ -245,44 +245,44 @@ export default function PhotonInspector() {
             <DataRow label="Distance"
                      value={`${params.distance_km} km`} />
             <DataRow label="Photon survived"
-                     value={isLost ? '✗ Lost' : '✓ Yes'}
+                     value={isLost ? 'âœ— Lost' : 'âœ“ Yes'}
                      highlight={!isLost} />
             <DataRow label="Dark count"
                      value={current.dark_count 
-                       ? '⚡ Yes' : 'No'} />
+                       ? 'âš¡ Yes' : 'No'} />
           </StageCard>
 
           {/* Eve stage */}
-          <StageCard title="Eve — Eavesdropper"
+          <StageCard title="Eve â€” Eavesdropper"
                      color={isIntercepted 
                        ? '#ff4444' : '#555555'}>
             <DataRow label="Intercepted"
                      value={isIntercepted 
-                       ? '⚡ YES — state disturbed' 
-                       : '✓ Not intercepted'}
+                       ? 'âš¡ YES â€” state disturbed' 
+                       : 'âœ“ Not intercepted'}
                      highlight={isIntercepted} />
             {isIntercepted && (
               <DataRow label="Basis mismatch"
                        value={current.basis_mismatch
-                         ? 'Yes — error introduced'
-                         : 'No — correct guess'} />
+                         ? 'Yes â€” error introduced'
+                         : 'No â€” correct guess'} />
             )}
           </StageCard>
 
           {/* Bob stage */}
-          <StageCard title="Bob — Measurement"
+          <StageCard title="Bob â€” Measurement"
                      color="#00ff88">
             <DataRow label="Basis chosen"
                      value={current.bob_basis === '+'
                        ? '+ Rectilinear'
                        : current.bob_basis === 'x'
-                         ? '× Diagonal'
+                         ? 'Ã— Diagonal'
                          : 'N/A (lost)'} />
             <DataRow label="Measured bit"
                      value={current.bob_bit ?? 'N/A'}
                      highlight />
             <DataRow label="Basis match"
-                     value={isMatch ? '✓ Match' : '✗ Mismatch'} />
+                     value={isMatch ? 'âœ“ Match' : 'âœ— Mismatch'} />
           </StageCard>
 
           {/* Result */}
@@ -298,12 +298,12 @@ export default function PhotonInspector() {
                    color: inSiftedKey ? '#00ff88' : '#ff4444' 
                  }}>
               {isLost
-                ? '✗ Lost in channel'
+                ? 'âœ— Lost in channel'
                 : !isMatch
-                  ? '✗ Discarded — basis mismatch'
+                  ? 'âœ— Discarded â€” basis mismatch'
                   : isIntercepted
-                    ? '⚡ Kept but may contain error'
-                    : '✓ Added to sifted key'
+                    ? 'âš¡ Kept but may contain error'
+                    : 'âœ“ Added to sifted key'
               }
             </div>
           </div>
@@ -318,14 +318,14 @@ export default function PhotonInspector() {
                   className="px-2 py-1 text-xs font-mono
                              text-[var(--text-muted)] hover:text-[var(--text-primary)]
                              disabled:opacity-30 transition-colors">
-            |◀
+            |â—€
           </button>
           <button onClick={goPrev}
                   disabled={inspector.currentIndex === 0}
                   className="px-2 py-1 text-xs font-mono
                              text-[var(--text-muted)] hover:text-[var(--text-primary)]
                              disabled:opacity-30 transition-colors">
-            ◀ Prev
+            â—€ Prev
           </button>
           <button onClick={togglePlay}
                   className="px-4 py-1.5 text-xs font-mono
@@ -338,21 +338,21 @@ export default function PhotonInspector() {
                     border: `1px solid ${inspector.isPlaying
                       ? '#ff444460' : '#00aacc60'}`
                   }}>
-            {inspector.isPlaying ? '⏸ Pause' : '▶ Play'}
+            {inspector.isPlaying ? 'â¸ Pause' : 'â–¶ Play'}
           </button>
           <button onClick={goNext}
                   disabled={inspector.currentIndex >= total - 1}
                   className="px-2 py-1 text-xs font-mono
                              text-[var(--text-muted)] hover:text-[var(--text-primary)]
                              disabled:opacity-30 transition-colors">
-            Next ▶
+            Next â–¶
           </button>
           <button onClick={goLast}
                   disabled={inspector.currentIndex >= total - 1}
                   className="px-2 py-1 text-xs font-mono
                              text-[var(--text-muted)] hover:text-[var(--text-primary)]
                              disabled:opacity-30 transition-colors">
-            ▶|
+            â–¶|
           </button>
         </div>
       </div>
@@ -362,3 +362,4 @@ export default function PhotonInspector() {
 
 // Depends on: store/simulationStore.js
 // Used by: pages/SimulatorPage.jsx (rendered over canvas)
+

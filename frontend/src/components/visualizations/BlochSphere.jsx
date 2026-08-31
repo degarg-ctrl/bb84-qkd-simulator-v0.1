@@ -19,7 +19,7 @@ function StateVector({ position, color = '#00ffff', label }) {
       </mesh>
       {label && (
         <Html position={[position[0] * 1.2, position[1] * 1.2, position[2] * 1.2]} center>
-          <div className="text-xs font-mono px-1 py-0.5 bg-gray-900/80 rounded" style={{ color }}>
+          <div className="text-xs font-mono px-1 py-0.5 rounded border" style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)', color }}>
             {label}
           </div>
         </Html>

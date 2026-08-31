@@ -127,8 +127,8 @@ export default function ExperimentsSection() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-white mb-4">Guided Experiments</h2>
-        <p className="text-gray-300 leading-relaxed">
+        <h2 className="text-2xl font-bold font-mono mb-4" style={{ color: 'var(--text-primary)' }}>Guided Experiments</h2>
+        <p className="leading-relaxed text-sm" style={{ color: 'var(--text-secondary)' }}>
           Learn QKD concepts through hands-on experiments. Each experiment focuses on a specific aspect 
           of quantum key distribution and includes step-by-step instructions.
         </p>
@@ -141,27 +141,29 @@ export default function ExperimentsSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-gray-800/50 border border-gray-700 rounded-lg p-6"
+            className="border rounded-lg p-6"
+            style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}
           >
             {/* Header */}
             <div className="mb-4">
-              <h3 className="text-xl font-semibold text-white mb-2">{exp.name}</h3>
-              <p className="text-gray-400">{exp.description}</p>
+              <h3 className="text-xl font-semibold font-mono mb-1" style={{ color: 'var(--text-primary)' }}>{exp.name}</h3>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{exp.description}</p>
             </div>
 
             {/* Objective */}
-            <div className="mb-4 bg-cyan-900/20 border border-cyan-500/30 rounded p-4">
-              <div className="text-cyan-400 text-sm font-semibold mb-2">OBJECTIVE</div>
-              <p className="text-gray-300 text-sm">{exp.objective}</p>
+            <div className="mb-4 rounded p-4 border"
+                 style={{ backgroundColor: 'rgba(0, 204, 255, 0.08)', borderColor: 'rgba(0, 204, 255, 0.25)' }}>
+              <div className="text-cyan-400 text-xs font-semibold mb-1 font-mono uppercase tracking-wider">OBJECTIVE</div>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{exp.objective}</p>
             </div>
 
             {/* Steps */}
             <div className="mb-4">
-              <div className="text-white font-semibold mb-3">Steps:</div>
+              <div className="font-semibold text-sm mb-3 font-mono" style={{ color: 'var(--text-primary)' }}>Steps:</div>
               <ol className="space-y-2">
                 {exp.steps.map((step, idx) => (
-                  <li key={idx} className="flex gap-3 text-gray-300 text-sm">
-                    <span className="text-cyan-400 font-bold">{idx + 1}.</span>
+                  <li key={idx} className="flex gap-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <span className="text-cyan-400 font-bold font-mono">{idx + 1}.</span>
                     <span>{step}</span>
                   </li>
                 ))}
@@ -170,18 +172,19 @@ export default function ExperimentsSection() {
 
             {/* Expected Results */}
             <div className="mb-4">
-              <div className="text-white font-semibold mb-2">Expected Results:</div>
-              <p className="text-gray-300 text-sm bg-gray-900/50 p-3 rounded">
+              <div className="font-semibold text-sm mb-2 font-mono" style={{ color: 'var(--text-primary)' }}>Expected Results:</div>
+              <p className="text-sm p-3 rounded border"
+                 style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-secondary)' }}>
                 {exp.expectedResults}
               </p>
             </div>
 
             {/* What to Observe */}
             <div>
-              <div className="text-white font-semibold mb-2">What to Observe:</div>
+              <div className="font-semibold text-sm mb-2 font-mono" style={{ color: 'var(--text-primary)' }}>What to Observe:</div>
               <ul className="space-y-1">
                 {exp.whatToObserve.map((item, idx) => (
-                  <li key={idx} className="flex gap-2 text-gray-300 text-sm">
+                  <li key={idx} className="flex gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
                     <span className="text-cyan-500">•</span>
                     <span>{item}</span>
                   </li>
@@ -193,27 +196,28 @@ export default function ExperimentsSection() {
       </div>
 
       {/* General Tips */}
-      <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-white mb-4">General Tips</h3>
-        <ul className="space-y-3 text-gray-300">
+      <div className="border rounded-lg p-6"
+           style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}>
+        <h3 className="text-xl font-semibold font-mono mb-4" style={{ color: 'var(--text-primary)' }}>General Tips</h3>
+        <ul className="space-y-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
           <li className="flex gap-3">
-            <span className="text-cyan-400">•</span>
+            <span className="text-cyan-400 font-bold">•</span>
             <span><strong>Start simple:</strong> Begin with Experiment 1 to understand basics</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400">•</span>
+            <span className="text-cyan-400 font-bold">•</span>
             <span><strong>Use Inspector:</strong> Click "INSPECT" button to see individual photon journeys</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400">•</span>
+            <span className="text-cyan-400 font-bold">•</span>
             <span><strong>Compare results:</strong> Run same experiment with different parameters</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400">•</span>
+            <span className="text-cyan-400 font-bold">•</span>
             <span><strong>Check metrics:</strong> Watch QBER, SKR, and efficiency values</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-cyan-400">•</span>
+            <span className="text-cyan-400 font-bold">•</span>
             <span><strong>Save experiments:</strong> Use SAVE button to preserve interesting configurations</span>
           </li>
         </ul>

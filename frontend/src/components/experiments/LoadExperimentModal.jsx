@@ -18,7 +18,6 @@ export default function LoadExperimentModal({ isOpen, onClose }) {
   const handleLoad = (experiment) => {
     setParams(experiment.params);
     setSourceModel(experiment.sourceModel || 'ideal');
-    // TODO: Load gates when QuantumCanvas integration is complete
     onClose();
   };
 
@@ -63,55 +62,67 @@ export default function LoadExperimentModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 w-[600px] max-h-[80vh] overflow-y-auto">
+      <div className="border rounded-lg p-6 w-[600px] max-h-[80vh] overflow-y-auto shadow-2xl"
+           style={{ backgroundColor: 'var(--panel-bg)', borderColor: 'var(--border-color)' }}>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-cyan-400">Load Experiment</h2>
+          <h2 className="text-xl font-semibold text-cyan-400 font-mono">Load Experiment</h2>
           <button
             onClick={handleImport}
-            className="text-sm bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded"
+            className="text-xs border px-3 py-1.5 rounded font-mono transition-colors"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--card-border)',
+              color: 'var(--text-primary)'
+            }}
           >
             Import JSON
           </button>
         </div>
 
         {experiments.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">No saved experiments</p>
+          <p className="text-center py-8 font-mono text-sm" style={{ color: 'var(--text-muted)' }}>No saved experiments</p>
         ) : (
           <div className="space-y-2">
             {experiments.map((exp) => (
-              <div key={exp.id} className="bg-gray-800 border border-gray-700 rounded p-3">
+              <div key={exp.id} className="border rounded p-3"
+                   style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}>
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h3 className="text-white font-semibold">{exp.name}</h3>
+                    <h3 className="font-semibold font-mono text-sm" style={{ color: 'var(--text-primary)' }}>{exp.name}</h3>
                     {exp.description && (
-                      <p className="text-gray-400 text-sm">{exp.description}</p>
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{exp.description}</p>
                     )}
-                    <p className="text-gray-500 text-xs mt-1">
+                    <p className="text-xs mt-1 font-mono" style={{ color: 'var(--text-subtle)' }}>
                       {new Date(exp.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="flex gap-1">
                     <button
                       onClick={() => handleLoad(exp)}
-                      className="text-xs bg-cyan-600 hover:bg-cyan-700 text-white px-2 py-1 rounded"
+                      className="text-xs bg-cyan-600 hover:bg-cyan-700 text-white font-mono px-2 py-1 rounded"
                     >
                       Load
                     </button>
                     <button
                       onClick={() => handleExport(exp)}
-                      className="text-xs bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded"
+                      className="text-xs border font-mono px-2 py-1 rounded transition-colors"
+                      style={{
+                        backgroundColor: 'var(--panel-bg)',
+                        borderColor: 'var(--border-color)',
+                        color: 'var(--text-muted)'
+                      }}
                     >
                       Export
                     </button>
                     <button
                       onClick={() => handleDelete(exp.id)}
-                      className="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded"
+                      className="text-xs bg-red-600 hover:bg-red-700 text-white font-mono px-2 py-1 rounded"
                     >
                       Delete
                     </button>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs font-mono" style={{ color: 'var(--text-subtle)' }}>
                   {exp.params.n_bits} bits, {exp.params.distance_km}km, {exp.sourceModel}
                 </div>
               </div>
@@ -121,7 +132,12 @@ export default function LoadExperimentModal({ isOpen, onClose }) {
 
         <button
           onClick={onClose}
-          className="w-full mt-4 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded"
+          className="w-full mt-4 border font-mono text-sm px-4 py-2 rounded transition-colors"
+          style={{
+            backgroundColor: 'var(--card-bg)',
+            borderColor: 'var(--card-border)',
+            color: 'var(--text-muted)'
+          }}
         >
           Close
         </button>

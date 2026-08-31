@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/pages/ResultsPage.jsx
  *
  * Results page for BB84 QKD Simulator.
@@ -6,12 +6,12 @@
  * results from the most recent experiment run.
  *
  * Sections:
- *   1. Experiment Parameters — what was run
- *   2. Comparison Table — simulated vs theoretical vs delta
+ *   1. Experiment Parameters â€” what was run
+ *   2. Comparison Table â€” simulated vs theoretical vs delta
  *   3. QBER chart with simulated point marked
  *   4. SKR chart with simulated point marked  
- *   5. Security Verdict — full analysis
- *   6. Bit Stream Detail — filterable table
+ *   5. Security Verdict â€” full analysis
+ *   6. Bit Stream Detail â€” filterable table
  */
 
 import { useState } from 'react'
@@ -24,7 +24,7 @@ import {
 import useSimulationStore from '../store/simulationStore'
 import OneTimePad from '../components/results/OneTimePad'
 
-// ─── HELPER: compute theoretical values at exact distance ─
+// â”€â”€â”€ HELPER: compute theoretical values at exact distance â”€
 function getTheoreticalAtDistance(results, distanceKm) {
   if (!results?.qber_vs_distance?.length) return null
   
@@ -44,14 +44,14 @@ function getTheoreticalAtDistance(results, distanceKm) {
   }
 }
 
-// ─── HELPER: compute theoretical survival at distance ─────
+// â”€â”€â”€ HELPER: compute theoretical survival at distance â”€â”€â”€â”€â”€
 // detectorEfficiency: 1.0 for ideal mode, 0.85 for realistic mode
 function theoreticalSurvival(distanceKm, detectorEfficiency = 0.85) {
   const lossdB = 0.2 * distanceKm
   return Math.pow(10, -lossdB / 10) * detectorEfficiency
 }
 
-// ─── HELPER: format delta with sign and color ─────────────
+// â”€â”€â”€ HELPER: format delta with sign and color â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function DeltaBadge({ simulated, theoretical, isPercent = false, 
                       invertGood = false }) {
   const delta = simulated - theoretical
@@ -69,18 +69,18 @@ function DeltaBadge({ simulated, theoretical, isPercent = false,
                          ? 'text-white bg-green-600'
                          : 'text-white bg-yellow-600'
                      }`}>
-      {Math.abs(delta) < 0.0001 ? '≈ 0' : formatted}
+      {Math.abs(delta) < 0.0001 ? 'â‰ˆ 0' : formatted}
     </span>
   )
 }
 
-// ─── EMPTY STATE ──────────────────────────────────────────
+// â”€â”€â”€ EMPTY STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function EmptyResults() {
   const { setActiveView } = useSimulationStore()
   return (
     <div className="flex flex-col items-center justify-center 
                     h-full gap-6 text-center py-20">
-      <div className="text-6xl opacity-20">📊</div>
+      <div className="text-6xl opacity-20">ðŸ“Š</div>
       <div>
         <div className="text-lg font-mono text-gray-400 mb-2">
           No Results Yet
@@ -96,13 +96,13 @@ function EmptyResults() {
                    text-white rounded font-mono text-sm
                    transition-colors"
       >
-        ▶ Go to Simulator
+        â–¶ Go to Simulator
       </button>
     </div>
   )
 }
 
-// ─── MAIN PAGE ────────────────────────────────────────────
+// â”€â”€â”€ MAIN PAGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function ResultsPage() {
   const { results, params, sourceModel } = useSimulationStore()
   const [bitStreamFilter, setBitStreamFilter] = useState('all')
@@ -114,7 +114,7 @@ export default function ResultsPage() {
     results, params.distance_km
   )
   // Detector efficiency depends on mode:
-  // Ideal = perfect detectors (η=1.0), Realistic = Si-APD (η=0.85)
+  // Ideal = perfect detectors (Î·=1.0), Realistic = Si-APD (Î·=0.85)
   const detectorEta = sourceModel === 'ideal' ? 1.0 : 0.85
   const theoreticalSurvivalRate = theoreticalSurvival(
     params.distance_km, detectorEta
@@ -153,8 +153,8 @@ export default function ResultsPage() {
       isPercent: true,
       invertGood: true,
       note: results.qber >= 0.11 
-        ? '⚠ Threshold breached' 
-        : '✓ Within safe range'
+        ? 'âš  Threshold breached' 
+        : 'âœ“ Within safe range'
     },
     {
       metric: 'SKR',
@@ -167,8 +167,8 @@ export default function ResultsPage() {
       isPercent: false,
       invertGood: false,
       note: results.skr === 0 
-        ? '⚠ No secure key' 
-        : '✓ Key extractable'
+        ? 'âš  No secure key' 
+        : 'âœ“ Key extractable'
     },
     {
       metric: 'Sifted Key',
@@ -226,7 +226,7 @@ export default function ResultsPage() {
                             ? 'bg-green-950/30 border-green-800/50 text-quantum-green'
                             : 'bg-red-950/30 border-red-800/50 text-quantum-red'
                           }`}>
-            {isSecure ? '✓ SECURE' : '⚠ BREACH'}
+            {isSecure ? 'âœ“ SECURE' : 'âš  BREACH'}
           </div>
         </div>
 
@@ -248,7 +248,7 @@ export default function ResultsPage() {
               { label: 'Gates', value: `${useSimulationStore.getState().placedGates?.length || 0} placed` },
               { label: 'Source Model', 
                 value: sourceModel === 'ideal' 
-                  ? '⚛ Ideal' : '🔬 Realistic' },
+                  ? 'âš› Ideal' : 'ðŸ”¬ Realistic' },
             ].map(p => (
               <div key={p.label} className="flex flex-col gap-1">
                 <div className="text-xs text-[var(--text-subtle)] font-mono 
@@ -333,9 +333,9 @@ export default function ResultsPage() {
             </table>
           </div>
           <div className="text-xs text-[var(--text-secondary)] font-mono">
-            ℹ Theoretical values computed from physics model at 
+            â„¹ Theoretical values computed from physics model at 
             {params.distance_km}km. Differences normal at low 
-            photon counts — use n_bits ≥ 5000 for convergence.
+            photon counts â€” use n_bits â‰¥ 5000 for convergence.
           </div>
         </div>
 
@@ -350,9 +350,9 @@ export default function ResultsPage() {
               QBER vs Distance
             </div>
             <div className="text-xs text-[var(--text-subtle)] font-mono">
-              <span className="text-quantum-blue">━</span> Theoretical curve
+              <span className="text-quantum-blue">â”</span> Theoretical curve
               &nbsp;&nbsp;
-              <span className="text-quantum-red">●</span> Your result at {params.distance_km}km
+              <span className="text-quantum-red">â—</span> Your result at {params.distance_km}km
             </div>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={qberChartData}
@@ -422,9 +422,9 @@ export default function ResultsPage() {
               SKR vs Distance
             </div>
             <div className="text-xs text-[var(--text-subtle)] font-mono">
-              <span className="text-quantum-green">━</span> Theoretical curve
+              <span className="text-quantum-green">â”</span> Theoretical curve
               &nbsp;&nbsp;
-              <span className="text-quantum-green">●</span> Your result at {params.distance_km}km
+              <span className="text-quantum-green">â—</span> Your result at {params.distance_km}km
             </div>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={skrChartData}
@@ -497,13 +497,13 @@ export default function ResultsPage() {
                       style={{ 
                         color: isSecure ? '#22c55e' : '#ef4444' 
                       }}>
-                  {isSecure ? '✓ SECURE' : '⚠ THRESHOLD BREACHED'}
+                  {isSecure ? 'âœ“ SECURE' : 'âš  THRESHOLD BREACHED'}
                 </span>
               </div>
               <div className="text-sm text-[var(--text-muted)] leading-relaxed">
                 {isSecure
                   ? `QBER of ${(results.qber * 100).toFixed(2)}% is below the 11% security threshold. The quantum channel is considered secure. Key extraction was successful.`
-                  : `QBER of ${(results.qber * 100).toFixed(2)}% exceeds the 11% threshold. Significant eavesdropping detected. Session was aborted — no secure key extracted.`
+                  : `QBER of ${(results.qber * 100).toFixed(2)}% exceeds the 11% threshold. Significant eavesdropping detected. Session was aborted â€” no secure key extracted.`
                 }
               </div>
             </div>
@@ -550,7 +550,7 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        {/* WCP Statistics — Realistic mode only */}
+        {/* WCP Statistics â€” Realistic mode only */}
         {sourceModel === 'realistic' && 
          results.wcp_enabled && 
          results.wcp_stats && 
@@ -582,7 +582,7 @@ export default function ResultsPage() {
                   note: 'PNS vulnerable'
                 },
                 {
-                  label: 'Mean Photon μ',
+                  label: 'Mean Photon Î¼',
                   value: params.mean_photon_number?.toFixed(2) || '0.20',
                   color: '#a855f7',
                   note: 'Per pulse'
@@ -619,7 +619,7 @@ export default function ResultsPage() {
                    }}>
                 <div className="text-xs font-mono text-yellow-400
                                 uppercase tracking-wider mb-2">
-                  ⚠ PNS Attack Active
+                  âš  PNS Attack Active
                 </div>
                 <div className="grid grid-cols-3 gap-4 
                                 text-xs font-mono">
@@ -649,7 +649,7 @@ export default function ResultsPage() {
                   </div>
                 </div>
                 <div className="mt-2 text-xs text-gray-500">
-                  ℹ QBER appears secure but Eve has stolen key
+                  â„¹ QBER appears secure but Eve has stolen key
                   information. Enable Decoy States to detect.
                 </div>
               </div>
@@ -674,8 +674,8 @@ export default function ResultsPage() {
                          ? '#ff4444' : '#00ff88'
                      }}>
                   {results.decoy_results.pns_detected
-                    ? '🚨 Decoy Protocol: PNS Attack Detected'
-                    : '✓ Decoy Protocol: No PNS Attack'}
+                    ? 'ðŸš¨ Decoy Protocol: PNS Attack Detected'
+                    : 'âœ“ Decoy Protocol: No PNS Attack'}
                 </div>
                 <div className="grid grid-cols-3 gap-4
                                 text-xs font-mono">
@@ -719,7 +719,7 @@ export default function ResultsPage() {
                    backgroundColor: '#00aacc20',
                    border: '1px solid #00aacc40'
                  }}>
-              🔐
+              ðŸ”
             </div>
             <div>
               <div className="text-xs font-mono uppercase 
@@ -820,17 +820,17 @@ export default function ResultsPage() {
                     <td className="px-3 py-1.5">
                       <span className={photon.match 
                         ? 'text-quantum-green' : 'text-[var(--text-muted)]'}>
-                        {photon.match ? '✓' : '✗'}
+                        {photon.match ? 'âœ“' : 'âœ—'}
                       </span>
                     </td>
                     <td className="px-3 py-1.5">
                       <span className={photon.intercepted 
                         ? 'text-quantum-red' : 'text-[var(--text-muted)]'}>
-                        {photon.intercepted ? '⚡' : '—'}
+                        {photon.intercepted ? 'âš¡' : 'â€”'}
                       </span>
                     </td>
                     <td className="px-3 py-1.5 text-[var(--text-subtle)]">
-                      {photon.polarization_angle}°
+                      {photon.polarization_angle}Â°
                     </td>
                   </tr>
                 ))}
@@ -843,3 +843,4 @@ export default function ResultsPage() {
     </div>
   )
 }
+

@@ -1,19 +1,19 @@
-export default function EntityTooltip({ entity }) {
+﻿export default function EntityTooltip({ entity }) {
   if (!entity) return null;
 
   const entityInfo = {
     clone: {
       name: 'Cloning Probe',
-      icon: '⊗',
+      icon: 'âŠ—',
       description: 'Demonstrates the No-Cloning Theorem by attempting to copy a quantum state.',
-      mechanism: 'CNOT entanglement between photon and probe qubit. The original state collapses — proving perfect cloning is impossible.',
+      mechanism: 'CNOT entanglement between photon and probe qubit. The original state collapses â€” proving perfect cloning is impossible.',
       effect: 'QBER spikes immediately as Bob receives damaged photons',
       useIn: 'Experiment 6',
       color: '#ef4444'
     },
     cnot: {
       name: 'CNOT Tap',
-      icon: '⊕',
+      icon: 'âŠ•',
       description: 'Controlled-NOT entanglement probe that Eve uses to extract information.',
       mechanism: 'Entangles the photon (control) with a probe qubit (target). Measurement disturbs both qubits.',
       effect: 'Eve gains partial information but introduces detectable errors',
@@ -26,23 +26,25 @@ export default function EntityTooltip({ entity }) {
   if (!info) return null;
 
   return (
-    <div className="bg-gray-900/98 backdrop-blur-md border border-cyan-500/30 rounded-lg shadow-2xl w-72 overflow-hidden">
+    <div className="rounded-lg shadow-2xl w-72 overflow-hidden border"
+         style={{ backgroundColor: 'var(--tooltip-bg, var(--panel-bg))', borderColor: 'var(--border-color)' }}>
       {/* Header */}
-      <div className="px-4 py-3 bg-gradient-to-r from-red-900/30 to-transparent border-b border-red-500/20">
+      <div className="px-4 py-3 border-b"
+           style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center gap-3">
           <div 
-            className="w-9 h-9 rounded flex items-center justify-center font-mono font-bold text-white shadow-lg text-lg"
+            className="w-9 h-9 rounded flex items-center justify-center font-mono font-bold text-white text-lg"
             style={{ backgroundColor: info.color }}
           >
             {info.icon}
           </div>
-          <h3 className="text-white font-semibold text-base">{info.name}</h3>
+          <h3 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>{info.name}</h3>
         </div>
       </div>
 
       {/* Body */}
       <div className="p-4 space-y-4">
-        <p className="text-gray-300 text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
           {info.description}
         </p>
 
@@ -50,7 +52,7 @@ export default function EntityTooltip({ entity }) {
           <div className="text-cyan-400 text-xs font-semibold mb-2 uppercase tracking-wide">
             Mechanism
           </div>
-          <p className="text-gray-400 text-sm leading-relaxed">
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-subtle)' }}>
             {info.mechanism}
           </p>
         </div>
@@ -60,14 +62,15 @@ export default function EntityTooltip({ entity }) {
             Effect on Protocol
           </div>
           <div className="text-red-400 text-sm bg-red-900/20 border border-red-500/20 rounded p-2">
-            ⚠ {info.effect}
+            âš  {info.effect}
           </div>
         </div>
 
-        <div className="text-gray-500 text-xs font-mono">
+        <div className="text-xs font-mono" style={{ color: 'var(--text-subtle)' }}>
           Used in: {info.useIn}
         </div>
       </div>
     </div>
   );
 }
+

@@ -6,6 +6,7 @@
  */
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Home, Atom, BookOpen, Sun, Moon, Menu } from 'lucide-react'
 import useSimulationStore from '../../store/simulationStore'
 
 export default function UniversalTopBar() {
@@ -13,9 +14,9 @@ export default function UniversalTopBar() {
   const { activeView, setActiveView, theme, setTheme } = useSimulationStore()
 
   const menuItems = [
-    { id: 'landing', label: 'Home', icon: '🏠' },
-    { id: 'simulator', label: 'Simulator', icon: '⚛️' },
-    { id: 'guide', label: 'About', icon: '📖' },
+    { id: 'landing', label: 'Home', icon: Home },
+    { id: 'simulator', label: 'Simulator', icon: Atom },
+    { id: 'guide', label: 'About', icon: BookOpen },
   ]
 
   return (
@@ -30,12 +31,11 @@ export default function UniversalTopBar() {
         {/* Hamburger Menu */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="flex flex-col gap-1 p-1.5 rounded hover:bg-white/5 transition-colors"
+          className="p-1.5 rounded hover:bg-white/5 transition-colors"
+          style={{ color: 'var(--text-primary)' }}
           aria-label="Menu"
         >
-          <div className="w-4 h-0.5 bg-[var(--text-primary)] rounded" />
-          <div className="w-4 h-0.5 bg-[var(--text-primary)] rounded" />
-          <div className="w-4 h-0.5 bg-[var(--text-primary)] rounded" />
+          <Menu size={18} />
         </button>
 
         {/* QKD Simulator Branding (clickable to home) */}
@@ -69,7 +69,7 @@ export default function UniversalTopBar() {
           }}
           title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
         >
-          {theme === 'dark' ? '☀' : '🌙'}
+          {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
         </button>
         
         <img 
@@ -106,23 +106,26 @@ export default function UniversalTopBar() {
                 minWidth: '200px'
               }}
             >
-              {menuItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setActiveView(item.id)
-                    setMenuOpen(false)
-                  }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-mono transition-colors ${
-                    activeView === item.id
-                      ? 'bg-cyan-500/20 text-cyan-400'
-                      : 'text-[var(--text-primary)] hover:bg-white/5'
-                  }`}
-                >
-                  <span className="text-lg">{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              ))}
+              {menuItems.map((item) => {
+                const IconComponent = item.icon
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveView(item.id)
+                      setMenuOpen(false)
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-mono transition-colors ${
+                      activeView === item.id
+                        ? 'bg-cyan-500/20 text-cyan-400'
+                        : 'text-[var(--text-primary)] hover:bg-white/5'
+                    }`}
+                  >
+                    <IconComponent size={16} />
+                    <span>{item.label}</span>
+                  </button>
+                )
+              })}
             </motion.div>
           </>
         )}
