@@ -1,6 +1,44 @@
 # Changelog
 Format: [YYYY-MM-DD HH:MM] | Branch | Action | filepath
 
+[2026-08-21 20:20] | chore/test-cleanup | deleted  | extract.txt
+[2026-08-21 20:20] | chore/test-cleanup | deleted  | extract_docx.py
+[2026-08-21 20:20] | chore/test-cleanup | deleted  | extract_docx2.py
+[2026-08-21 20:20] | chore/test-cleanup | deleted  | qkd-simulator/check_sifted.py
+[2026-08-21 20:20] | chore/test-cleanup | created  | backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/README.md
+[2026-08-21 20:20] | chore/test-cleanup | created  | backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/TEST_RESULTS.md
+[2026-08-21 20:20] | chore/test-cleanup | created  | backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/TEST_FINDINGS.md
+[2026-08-21 20:20] | chore/test-cleanup | created  | backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/specs/requirements.md
+[2026-08-21 20:20] | chore/test-cleanup | created  | backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/specs/design.md
+[2026-08-21 20:20] | chore/test-cleanup | created  | backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/specs/tasks.md
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/run_table9.py -> backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/run_table9c.py -> backend/tests/runs/2026-06-24_table-ix-detector-efficiency-sweep/suite/
+[2026-08-21 20:20] | chore/test-cleanup | deleted  | backend/table9_results.md
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/check_decoy.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/check_decoy_50.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/dry_run_y1.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/test_partial_attack.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/validate_y1_threshold.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/verify_run_f.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/verify_y1_live.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | moved    | backend/run_tests.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-08-21 20:20] | chore/test-cleanup | modified | docs/TEST_LOG.md
+[2026-06-22 08:32] | chore/test-cleanup | moved    | backend/run_table3.py -> backend/tests/runs/2026-06-18_table-iii-distance-sweep/suite/
+[2026-06-22 08:32] | chore/test-cleanup | moved    | backend/test_175.py -> backend/tests/runs/2026-06-18_table-iii-distance-sweep/suite/
+[2026-06-22 08:32] | chore/test-cleanup | moved    | backend/test_175_chunked.py -> backend/tests/runs/2026-06-18_table-iii-distance-sweep/suite/
+[2026-06-22 08:32] | chore/test-cleanup | moved    | backend/run_table3_chunked.py -> backend/tests/runs/2026-06-18_table-iii-distance-sweep/suite/
+[2026-06-22 08:32] | chore/test-cleanup | created  | backend/tests/runs/2026-06-22_table-vii-decoy-verification/README.md
+[2026-06-22 08:32] | chore/test-cleanup | created  | backend/tests/runs/2026-06-22_table-vii-decoy-verification/RESULTS.md
+[2026-06-22 08:32] | chore/test-cleanup | created  | backend/tests/runs/2026-06-22_table-vii-decoy-verification/FINDINGS.md
+[2026-06-22 08:32] | chore/test-cleanup | moved    | backend/run_table7.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-06-22 08:32] | chore/test-cleanup | moved    | backend/debug_decoy.py -> backend/tests/runs/2026-06-22_table-vii-decoy-verification/suite/
+[2026-06-22 08:32] | chore/test-cleanup | modified | docs/TEST_LOG.md
+[2026-06-22 01:56] | fix/decoy-indexing | modified | backend/core/decoy.py
+[2026-06-22 04:35] | fix/channel-wcp-vacuum | modified | backend/core/channel.py
+[2026-06-22 04:35] | fix/channel-wcp-vacuum | created  | backend/core/detector.py
+[2026-06-22 04:35] | fix/channel-wcp-vacuum | modified | docs/CHANGELOG.md
+
+[2026-05-24 16:25] | main | modified | .gitignore
 [2026-05-24 00:00] | main | modified | README.md
 [2026-05-04 05:22] | main | modified | docs/ERROR_LOG.md
 [2026-05-04 05:22] | main | modified | docs/CHANGELOG.md
@@ -141,3 +179,24 @@ Format was: [YYYY-MM-DD HH:MM] | Branch | Type | Description
 [2026-03-12] | feature/backend-core | feat | alice.py, bob.py, channel.py, eve.py, protocol.py, metrics.py, constants.py
 [2026-03-12] | docs | docs | Documentation folder initialized — PHYSICS_CONTRACT.md, DECISIONS.md, PRD.md, HIGH_LEVEL_DESIGN.md, ERROR_LOG.md, CHANGELOG.md, PROJECT_OVERVIEW.md
 [2026-03-12] | main | chore | Repository initialized, branching strategy created
+[2026-06-22 08:58] | fix/decoy-lmc-y1 | modified | backend/core/decoy.py
+[2026-06-22 08:58] | fix/decoy-lmc-y1 | modified | backend/routers/simulation.py
+[2026-06-22 08:58] | fix/decoy-lmc-y1 | modified | backend/tests/runs/2026-05-02_physics-accuracy/suite/test_parameter_sweep.py
+[2026-09-01 02:14] | main | modified | docs/PHYSICS_CONTRACT.md
+[2026-09-01 02:14] | main | modified | docs/HIGH_LEVEL_DESIGN.md
+[2026-09-01 02:14] | main | modified | docs/PRD.md
+[2026-09-01 02:14] | main | modified | docs/ERROR_LOG.md
+[2026-09-01 02:14] | main | modified | docs/TEST_LOG.md
+[2026-09-01 02:14] | main | modified | backend/tests/runs/2026-05-04_comprehensive-validation/suite/test_gates.py
+[2026-09-01 02:14] | main | modified | backend/tests/runs/2026-05-04_comprehensive-validation/TEST_FINDINGS.md
+[2026-09-01 02:17] | main | modified | README.md
+[2026-09-01 02:17] | main | modified | docs/PRD.md
+[2026-09-01 02:22] | main | modified | frontend/src/pages/LandingPage.jsx
+[2026-09-01 02:22] | main | modified | frontend/index.html
+[2026-09-01 02:34] | main | deleted  | qkd-simulator/.hypothesis
+[2026-09-01 02:34] | main | deleted  | qkd-simulator/backend/.hypothesis
+[2026-09-01 02:34] | main | deleted  | docs/RESEARCH_PAPER_DRAFT.md
+[2026-09-01 02:34] | main | modified | qkd-simulator/.gitignore
+[2026-09-01 02:34] | main | modified | README.md
+[2026-09-01 02:34] | main | modified | CODEBASE_RULES.md
+[2026-09-01 02:36] | main | deleted  | frontend/build_error.txt
