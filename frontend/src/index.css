@@ -15,6 +15,7 @@
   :root {
     color-scheme: dark;
     --bg-primary: #2a2a2a;
+    --bg-secondary: #333338;
     --bg-panel: #242424;
     --bg-dark: #1e1e1e;
     --border-white: rgba(255,255,255,0.15);
@@ -24,58 +25,77 @@
     --panel-dark: #1e1e1e;
     --border-color: rgba(255,255,255,0.2);
     --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
     --text-muted: #9ca3af;
     --text-subtle: #6b7280;
+
+    --card-bg: #2f2f35;
+    --card-border: rgba(255,255,255,0.1);
+    --code-bg: #1a1a2e;
+    --input-bg: #333338;
+    --input-border: rgba(255,255,255,0.15);
+    --panel-border: rgba(255,255,255,0.1);
+    --tooltip-bg: #1a1a22;
+    --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
+    --scrollbar-thumb-active: rgba(255, 255, 255, 0.4);
   }
 
   :root.light {
     color-scheme: light;
-    --bg-primary: #e8e8ec;
-    --bg-secondary: #d8d8de;
-    --panel-bg: #c8c8d4;
-    --panel-border: rgba(0,0,0,0.25);
-    --text-primary: #0f0f12;
+    --bg-primary: #f0f0f4;
+    --bg-secondary: #e4e4ea;
+    --bg-panel: #e4e4ea;
+    --bg-dark: #d8d8e0;
+    --border-white: rgba(0,0,0,0.1);
+
+    --canvas-bg: #f4f4f5;
+    --panel-bg: #e8e8ee;
+    --panel-dark: #dcdce4;
+    --panel-border: rgba(0,0,0,0.12);
+    --border-color: rgba(0,0,0,0.15);
+    --text-primary: #1a1a2e;
     --text-secondary: #3a3a4a;
     --text-muted: #5a5a6e;
-    --input-bg: #b0b0c0;
-    --input-border: rgba(0,0,0,0.22);
-    --card-bg: #b8b8c8;
-    --card-border: rgba(0,0,0,0.15);
-    
-    --canvas-bg: #f4f4f5;
-    --panel-dark: #f0f0f0;
-    --border-color: rgba(0,0,0,0.12);
-    --text-subtle: #888888;
+    --text-subtle: #7a7a8e;
+
+    --card-bg: #e0e0e8;
+    --card-border: rgba(0,0,0,0.1);
+    --code-bg: #d8d8e2;
+    --input-bg: #d4d4dc;
+    --input-border: rgba(0,0,0,0.18);
+    --tooltip-bg: #e0e0e8;
+    --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.3);
+    --scrollbar-thumb-active: rgba(0, 0, 0, 0.45);
   }
   
   body {
-    background-color: #2a2a2a;
-    color: white;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
 /* Global expanding scrollbar without layout shift */
 ::-webkit-scrollbar {
-  width: 14px; /* Physical track width (provides enough space for expansion) */
+  width: 14px;
   height: 14px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 5px solid transparent; /* 14 - 10 = 4px visible width */
+  background-color: var(--scrollbar-thumb);
+  border: 5px solid transparent;
   background-clip: padding-box;
   border-radius: 14px;
 }
-/* When hovering the scrollable container, thicken the thumb */
 :hover::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.25);
-  border-width: 3px; /* 14 - 6 = 8px visible width */
+  background-color: var(--scrollbar-thumb-hover);
+  border-width: 3px;
 }
-/* When hovering the scrollbar thumb itself */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: var(--scrollbar-thumb-active);
   border-width: 3px;
 }
