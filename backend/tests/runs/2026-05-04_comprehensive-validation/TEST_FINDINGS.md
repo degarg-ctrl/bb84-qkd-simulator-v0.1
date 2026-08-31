@@ -34,8 +34,8 @@
 
 ### Section 6 — Gates
 - H gate expected to raise QBER significantly (basis randomisation).
-- Z gate expected to have minimal QBER change vs baseline.
-- X gate expected to shift bob_bit mean toward 0.5 (bit flip).
+- Z gate expected to yield ~50% QBER on mixed basis streams (flips |+> <-> |-> in diagonal basis, invariant in rectilinear basis).
+- X gate expected to raise QBER on '+' basis matches to 100% (bit flip |0> <-> |1> in rectilinear basis, invariant in diagonal basis).
 
 ### Section 7 — Single Photon
 - Loss rate at 100km should exceed 80% per Beer-Lambert.

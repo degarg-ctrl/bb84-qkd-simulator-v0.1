@@ -204,7 +204,12 @@ def run_simulation(request: SimulationRequest) -> SimulationResponse:
           gains = compute_gains(
             measured_states, decoy_intensities
           )
-          decoy_results = detect_pns_attack(gains)
+          decoy_results = detect_pns_attack(
+            gains,
+            distance_km=request.distance_km,
+            eta=DETECTOR_EFFICIENCY if request.wcp_enabled else 1.0,
+            dark_count_prob=DARK_COUNT_PROB if request.wcp_enabled else 0.0,
+          )
 
         # Step 7: Assemble bit_stream for frontend
         # Include only detected photons, capped at 500 for response size

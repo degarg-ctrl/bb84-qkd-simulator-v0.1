@@ -101,12 +101,12 @@ def test_h_gate_changes_qber(baseline_trial, results_collector):
 
 
 # ---------------------------------------------------------------------------
-# 6.4 — Z gate: QBER must be close to baseline (phase flip, no basis change)
+# 6.4 — Z gate: QBER impact conforms to phase-flip physics
 # ---------------------------------------------------------------------------
 
 @pytest.mark.slow
 def test_z_gate_minimal_qber_change(baseline_trial, results_collector):
-    """Z gate (phase flip) must not significantly change QBER vs baseline."""
+    """Z gate (phase flip) is invariant in '+' basis (|0>, |1>) and flips state in 'x' basis (|+> <-> |->)."""
     z_trial = run_pipeline_trials(
         n_trials=N_TRIALS, n_bits=N_BITS,
         distance_km=DIST, noise_level=NOISE,
@@ -120,46 +120,39 @@ def test_z_gate_minimal_qber_change(baseline_trial, results_collector):
         'gate': 'Z', 'baseline_qber': baseline_trial.mean_qber,
         'gated_qber': z_trial.mean_qber, 'delta': delta,
     })
-    # Z gate should cause < 0.10 QBER change (it only adds a phase, not a full basis change)
-    assert delta < 0.10, (
-        f"Z gate QBER delta unexpectedly large: {delta:.4f}. "
-        f"baseline={baseline_trial.mean_qber:.4f}, gated={z_trial.mean_qber:.4f}"
+    # Z gate flips |+> <-> |-> in 'x' basis (~50% of sifted key) while leaving '+' basis invariant (~50%).
+    # Expected sifted QBER ~0.50 (gated_qber ~ 0.50).
+    assert abs(z_trial.mean_qber - 0.50) < 0.10, (
+        f"Z gate QBER out of expected ~0.50 range for mixed bases: {z_trial.mean_qber:.4f}. "
+        f"baseline={baseline_trial.mean_qber:.4f}"
     )
 
 
 # ---------------------------------------------------------------------------
-# 6.5 — X gate: bob_bit distribution shifts (bit flip)
+# 6.5 — X gate: bit flip causes QBER shift on '+' basis
 # ---------------------------------------------------------------------------
 
 @pytest.mark.slow
-def test_x_gate_bit_flip(results_collector):
-    """X gate must produce detectable shift in bob_bit distribution vs baseline."""
-    def avg_bob_bit(result):
-        bits = [s['bob_bit'] for s in result.bit_stream if s['bob_bit'] is not None]
-        return float(np.mean(bits)) if bits else 0.5
-
-    baseline = run_pipeline(
-        n_bits=N_BITS, distance_km=DIST, noise_level=NOISE,
+def test_x_gate_bit_flip(baseline_trial, results_collector):
+    """X gate (bit flip) flips |0> <-> |1> in '+' basis, raising QBER on '+' basis matches."""
+    x_trial = run_pipeline_trials(
+        n_trials=N_TRIALS, n_bits=N_BITS,
+        distance_km=DIST, noise_level=NOISE,
         attack_prob=ATK_PROB, attack_strategy=STRATEGY,
+        gates=['X'],
         seed=SEED,
     )
-    x_gated = run_pipeline(
-        n_bits=N_BITS, distance_km=DIST, noise_level=NOISE,
-        attack_prob=ATK_PROB, attack_strategy=STRATEGY,
-        gates=['X'], seed=SEED,
-    )
-
-    baseline_mean = avg_bob_bit(baseline)
-    x_mean = avg_bob_bit(x_gated)
-    delta = abs(x_mean - baseline_mean)
+    delta = abs(x_trial.mean_qber - baseline_trial.mean_qber)
 
     results_collector.append({
         'section': 6, 'test': 'x_gate_bit_flip',
-        'gate': 'X', 'baseline_bob_mean': baseline_mean,
-        'gated_bob_mean': x_mean, 'delta': delta,
+        'gate': 'X', 'baseline_qber': baseline_trial.mean_qber,
+        'gated_qber': x_trial.mean_qber, 'delta': delta,
     })
-    # X gate flips all bits — mean bob_bit should shift significantly
-    assert delta > 0.1, (
-        f"X gate bob_bit delta too small: {delta:.4f}. "
-        f"baseline_mean={baseline_mean:.4f}, x_mean={x_mean:.4f}"
+    # X gate flips bits in '+' basis (~50% of sifted key) while leaving 'x' basis invariant (~50%).
+    # Expected sifted QBER ~0.50 (gated_qber ~ 0.50, delta vs 0.0 baseline ~ 0.50).
+    assert delta > 0.20, (
+        f"X gate QBER delta too small: {delta:.4f}. "
+        f"baseline={baseline_trial.mean_qber:.4f}, gated={x_trial.mean_qber:.4f}"
     )
+

@@ -50,13 +50,22 @@ class QuantumChannel:
     def transmit(self, states: list[dict]) -> list[dict]:
         """
         Transmit photon states through the channel using vectorized NumPy ops.
+
+        WCP-aware: vacuum pulses (wcp_lost=True) contain no photon and are
+        permanently lost before entering the fiber. They cannot survive
+        attenuation, so their fiber_survivals slot is forced to False.
+        Dark counts on those slots remain possible (real detector behaviour).
         """
         n = len(states)
         if n == 0:
             return []
 
-        # 1. Attenuation
+        # 1. Attenuation — vacuum pulses have no photon to survive the fiber
+        wcp_already_lost = np.array(
+            [s.get('wcp_lost', False) for s in states], dtype=bool
+        )
         fiber_survivals = np.random.random(n) < self.p_survive
+        fiber_survivals[wcp_already_lost] = False  # enforce: no photon → no survival
         
         # 2. Detector Efficiency (only for those that survived fiber)
         detector_success = np.zeros(n, dtype=bool)

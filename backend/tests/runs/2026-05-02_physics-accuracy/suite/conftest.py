@@ -212,7 +212,10 @@ def run_pipeline(
     decoy_results: dict = {}
     if decoy_enabled and decoy_intensities is not None:
         gains = compute_gains(measured_states, decoy_intensities)
-        decoy_results = detect_pns_attack(gains)
+        decoy_results = detect_pns_attack(
+            gains,
+            distance_km=distance_km,
+        )
 
     return PipelineResult(
         qber=float(qber_result['qber']),
