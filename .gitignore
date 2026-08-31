@@ -26,6 +26,3 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
-
-# Research Paper Draft
-docs/RESEARCH_PAPER_DRAFT.md

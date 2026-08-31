@@ -1,16 +1,18 @@
 # Product Requirements Document — QKD BB84 Simulator
-Version: 0.1 | Status: Active | Last Updated: 2026-03-12
+Version: 0.4.0 | Status: Active | Last Updated: 2026-06-24
 
 ## 1. Objective
-A production-grade, visually rich BB84 QKD simulator for academic research
+An interactive, visually rich BB84 QKD simulator for academic research
 and classroom teaching.
 
 ## 2. Core Features
 
 F1 — BB84 Protocol Simulation (Backend)
-- Alice: random bits, random bases, state encoding
+- Alice: random/user-defined bits, random/user-defined bases, state encoding
 - Channel: fiber attenuation, detector efficiency, dark counts
-- Eve: intercept-resend, partial, burst attack strategies
+- Eve: intercept-resend, partial, burst attack strategies, PNS attack simulation
+- WCP & Decoy State: Poisson photon counts, decoy state intensity analysis
+- Quantum Gates & Probes: H, X, Y, Z, S, T gate transformations & CNOT cloning probes
 - Bob: random basis measurement
 - Sifting, QBER estimation, key extraction, SKR computation
 - All physics conform to PHYSICS_CONTRACT.md
@@ -25,19 +27,21 @@ F2 — Photon Animation (Canvas)
 - Detector miss: photon dims at Bob without flash
 - 60fps via requestAnimationFrame only
 
-F3 — Configuration Controls
+F3 — Configuration Controls & Experiment Modes
 - Distance: 0–150km
 - Noise level: 0–10%
 - Attack probability: 0–1
-- Attack strategy: intercept_resend / partial / burst
-- N bits: 100–10000
+- Attack strategy: intercept_resend / partial / burst / pns
+- N bits: 1–10,000
+- WCP model toggle, mean photon number slider (0.05–0.5), Decoy state toggle
+- 8 guided experiment preset modes
 - Every control has a tooltip with physical explanation
 
-F4 — Metrics and Charts
+F4 — Metrics, Visualizations, and OTP Demo
 - Live cards: QBER, SKR, Sifted Key Length, Efficiency
-- QBER vs Distance chart
-- SKR vs Distance chart
-- QBER vs Attack Strength chart
+- Interactive charts: QBER vs Distance, SKR vs Distance
+- 3D Bloch Sphere quantum state vector rendering
+- One-Time Pad (OTP) encryption & decryption interactive demonstration
 - Bit stream table: per-photon alice_bit, alice_basis, bob_basis, bob_bit, match
 - Audit log tab
 

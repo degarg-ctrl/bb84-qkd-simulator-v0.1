@@ -26,7 +26,7 @@ v0.4.0
 
 ## 🧠 About
 
-The BB84 QKD Simulator is a **production-grade, open-source web application** that lets anyone — students, researchers, and educators — simulate the complete BB84 quantum key distribution protocol in a browser. No quantum hardware, no installation, no prerequisites beyond curiosity.
+The BB84 QKD Simulator is an **interactive, open-source web application** that lets anyone — students, researchers, and educators — simulate the complete BB84 quantum key distribution protocol in a browser. No quantum hardware, no installation, no prerequisites beyond curiosity.
 
 Users play the roles of **Alice** (the sender), **Bob** (the receiver), and optionally **Eve** (the eavesdropper) to explore how quantum mechanics can guarantee perfectly secure communication. The simulator covers everything from fundamental single-photon transmission to advanced attacks that exploit imperfections in real-world laser sources.
 
@@ -36,7 +36,6 @@ Users play the roles of **Alice** (the sender), **Bob** (the receiver), and opti
 - **Interactive visualization** — Real-time HTML5 Canvas photon animation at 60fps with color-coded polarization states.
 - **Ideal vs Realistic toggle** — Switch between perfect single-photon sources (textbook theory) and real-world Weak Coherent Pulse (WCP) laser sources to see why practical QKD is harder than the theory suggests.
 - **8 guided experiment modes** — From basic key exchange to advanced PNS attacks and decoy state countermeasures.
-- **Validated learning impact** — A user study with 20 undergraduates demonstrated a **67% improvement** in QKD comprehension scores (p < 0.001) and a System Usability Scale score of **82.5** (Grade: A, Excellent).
 
 ---
 
@@ -437,8 +436,7 @@ qkd-simulator/
     ├── DECISIONS.md               ← Architecture decisions with rationale
     ├── CHANGELOG.md               ← File-level change log
     ├── ERROR_LOG.md               ← Known bugs and resolutions
-    ├── TEST_LOG.md                ← Test run summaries
-    └── RESEARCH_PAPER_DRAFT.md    ← IEEE-format research paper draft
+    └── TEST_LOG.md                ← Test run summaries
 ```
 
 ---
@@ -453,7 +451,6 @@ qkd-simulator/
 | [DECISIONS.md](docs/DECISIONS.md) | Every significant technology and architecture choice, with rationale and alternatives considered. |
 | [CHANGELOG.md](docs/CHANGELOG.md) | File-level audit trail of every create, modify, and delete operation. |
 | [ERROR_LOG.md](docs/ERROR_LOG.md) | Bugs encountered, root causes, resolutions, and prevention rules. |
-| [RESEARCH_PAPER_DRAFT.md](docs/RESEARCH_PAPER_DRAFT.md) | IEEE Transactions on Quantum Engineering paper draft — includes literature survey, validation methodology, user study results, and hardware implementation guide. |
 
 ---
 
